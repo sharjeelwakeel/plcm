@@ -5,30 +5,140 @@ include_once("connection/connection.php");
 
 
 
+$s_id=$_SESSION['id'];
 
-// if(isset($_REQUEST['id'])){
-//   $id=$_REQUEST['id'];
-//   $m_id=$_SESSION['id'];
+$s_id_array=array();
+$user=null;
+$adm=1;
+$index=-1;
+$query="select s_id,max(date),category from chat where r_id=".$s_id." and status='unseen' group by s_id order by msg_id desc";
+// echo $query;
+$priority=mysqli_query($conn,$query);
 
-//   $query="update assign_projects set m_status='seen' where p_id=".$id. " and m_id=".$m_id;
-// //echo $query;
-//   if(mysqli_query($conn,$query)){
+if(mysqli_num_rows($priority)>0){
+  while($pr=mysqli_fetch_assoc($priority)){
+    $id=$pr['s_id'];
 
-//   }
-//   else{
-//     echo"no run";
-//   }
-//   $query="update notifications set status='seen' where p_id=".$id;
+    if($pr['category']==0){
+      $adm++;
+      $query="select * from admin where a_id=".$id;
+      $admin=mysqli_query($conn,$query);
+      $ad=mysqli_fetch_assoc($admin);
+      $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+      <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
+     
+<span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
+<span class='visually-hidden'>New alerts</span>
+</span>
+     </td>
+  
+  </tr>";
 
-//  if(mysqli_query($conn,$query)){
+
+
+    }//if end
+    else{
+     
+      $s_id_array[++$index]=$id;
+      
+      $query="select * from members where m_id=".$id;
+      $members=mysqli_query($conn,$query);
+      $mbr=mysqli_fetch_assoc($members);
+      $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+      <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
+     
+<span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
+<span class='visually-hidden'>New alerts</span>
+</span>
+     </td>
+  
+  </tr>";
+
+    }//else end
+
+
+  }//while end
+
+
+  if($adm==1){
+ 
+    $query="select * from admin where a_id=14";
+    $admin=mysqli_query($conn,$query);
+    $ad=mysqli_fetch_assoc($admin);
+    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
    
-//  }
-//  $query="select * from projects where p_id=".$id;
-// //  echo $query;
-// //  exit(1);
-//  $res=mysqli_query($conn,$query);
-//  $res=mysqli_fetch_assoc($res);
-// }
+
+   </td>
+
+</tr>";
+
+  }// if end adm
+if($index==-1){
+  $query="select * from members where m_id!=".$s_id;
+ 
+  
+}
+else{
+  $query="select * from members where m_id not in(" . implode(',', $s_id_array) .") and m_id!=".$s_id;
+
+}
+  // echo $query;
+  // exit(1);
+  $member=mysqli_query($conn,$query);
+  if(mysqli_num_rows($member)>0){
+  while($mbr=mysqli_fetch_assoc($member)){
+    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
+   
+   </td>
+
+</tr>";
+
+  }//while end
+
+}//if end
+
+
+}//if end
+else{
+
+
+
+  $query="select * from admin";
+$admin=mysqli_query($conn,$query);
+$ad=mysqli_fetch_assoc($admin);
+    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
+   
+
+   </td>
+
+</tr>";
+
+$query="select * from members where m_id!=".$s_id;
+
+// echo $id;
+// $query="select * from members ";
+$members=mysqli_query($conn,$query);
+// echo mysqli_num_rows($members);
+
+if(mysqli_num_rows($members)>0){
+  while($mbr=mysqli_fetch_assoc($members)){
+    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
+   
+   </td>
+
+</tr>";
+
+  }//while end
+
+}//if end
+
+
+}
+
 
 
 ?>
@@ -44,17 +154,16 @@ include_once("connection/connection.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <title>PLCM</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
     <link rel='stylesheet' href='css/style.css'>
     <link rel='stylesheet' href='css/style2.css'>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  
+
   
   </head>
   <body>
 
-  <div class='container-fluid p-0 responsive'>
+  <div class='container-fluid p-0 responsive wrapper-message' >
 
   <!---------------------------navbar----------------------->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -201,41 +310,28 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
               <!-------notification end----------->
 
                  <!--------------------content start--------------------->
-<section class=' bg ' style="height:90vh">
-  <div class='row m-0 align-items-stretch justify-content-start ' style="height:90vh">
+<section class=' bg message-sec ' style="height:90vh">
+  <div class='row m-0 align-items-stretch justify-content-start ' style="height:90vh;">
 
-  <div class='col-md-3 d-none d-md-block  bg-success rounded  '>
+  <div class='col-3    bg-success rounded  ' style="height:89.5vh;overflow-y:hidden">
 
   
-  <div class="table-responsive mt-2">
-<table id="userTable" class=' table table-hover ' style="border-collapse:separate">
+  
+
+  
+  <div class="table-responsive mt-2 pb-5 mt-5" style="height:84.5vh;overflow-y:scroll">
+<table id="userTable" class=' table table-hover ' style="border-collapse: separate;">
         <thead>
             <th class='invisible border-0' >name</th>
                    </thead>
-        <tbody>
-          
-           <tr>
-               <td><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"><span class='text-light fw-bold ps-2'>sharjeel</span></td>
+        <tbody id="list_profile">
+
+   
+       <?php echo $user;?>
+
+         
+
            
-           </tr>
-
-           <tr>
-               <td><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"><span class='text-light fw-bold ps-2'>sharjeel</span></td>
-           
-           </tr>
-
-
-           <tr>
-               <td><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"><span class='text-light fw-bold ps-2'>sharjeel</span></td>
-           
-           </tr>
-
-
-           <tr>
-               <td><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"><span class='text-light fw-bold ps-2'>sharjeel</span></td>
-           
-           </tr>
-
          
              
         </tbody>
@@ -245,67 +341,30 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                 </div><!--table_responsive-->
 </div><!--col-md-4-->
 
-<div class='col-md-9 bg-body d-flex flex-column' style="height:90vh">
-    <div class='bg px-2 py-4' style="height:20%">
-    <img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px">
-
-<span class='text-muted'>sharjeel</span>
+<div class='col-9 bg-body d-flex flex-column p-0' style="height:90vh">
+    <div class='bg px-2 py-4 user_profile' style="height:15%">
+  
 </div>
 
-        <div class='col-12 text-muted h3 fw-bold  d-flex flex-column justify-content-end align-items-start' style="height:60%; overflow-y:scroll" >
-                <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-         
-               <!-- <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
+        <div class='col-12 text-muted h3 fw-bold  d-flex flex-column  align-items-start ' id='message_show' style="height:70%; overflow-y:scroll" >
+                <!-- <div class='d-flex  ms-auto mt-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
                <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
                 -->
-               
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
-
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
-
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
-
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
-
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
          
-               
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
-               
-               <div class='d-flex  ms-auto'> <div class='bg-success rounded-pill p-2 px-4 text-light fw-normal fs-5'>hello how are you</div><img src='admin/images/1052915969WhatsApp Image 2021-11-21 at 5.11.16 AM.jpeg' class='rounded-circle' style="height:50px;width:50px"></div>
-               <div class='d-flex'><img src='admin/images/144877969798341558_279333590123740_5835491160776245248_n.jpg' class='rounded-circle' style="height:50px;width:50px"> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5  '>hi my name is sharjeel</div></div>
-               
+          
+            
+                
           
           </div>
          
        
  
-<div  style="height:20%">
-    <form class='d-flex align-items-center h-100' >
-        <textarea class='form-control flex-grow-1 rounded-pill' style="resize:none"></textarea>
-        <button class='btn btn-outline-success rounded-pill'>send</button>
+<div  style="height:15%">
+    <form class='d-flex align-items-center h-100 bg' >
+        <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style="resize:none;height:75%" id="send_message"></textarea>
+        <button type='button' class='btn btn-outline-success rounded-pill me-4 btn-lg disabled send_message_button' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor-fill" viewBox="0 0 16 16">
+  <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+</svg></button>
 
 </form>
 
@@ -353,69 +412,167 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src='js/just-validate.js'></script>
     <script>
+    $('#userTable').DataTable({
+      "bSort" : false
+    });
+
+
+
+
+
+
+
+var element = document.getElementById("message_show");
+var msg = document.getElementsByClassName("input_message")[0];
+
+var filter=document.getElementById("userTable_filter").firstElementChild.firstChild;
+filter.textContent="";
+
+element.scrollTop = element.scrollHeight;
         var vali=0;
+        var id,category,table;
         $(document).ready(function(){
+
+
+
+          setInterval(function () { 
+            $.ajax({
+  method:"POST",
+  url:"php/new_msg_list.php",
+ 
+  success:function(data){
+    // alert("yes");
+    $("#list_profile").html(data);
+  }
+  
+  });
+           }, 10000);
+
+          $(document).on("click",".profile",function(){
+          // alert($(this).data("table"));
+
+            // console.log($(this).data("table"));
+
+             table=$(this).data("table");
+          category=$(this).data("category");
+             id=$(this).data('id');
+
+            $("#send_message").attr("data-id",id);
+            $("#send_message").attr("data-category",category);
+            $("#send_message").attr("data-table",table);
+   
+            fetch_chat_receiver_dp();
+            setInterval(function () { fetch_chat_receiver_dp();
+           }, 1000);
+      
+
+      
+    })
+
+
+        
+function fetch_chat_receiver_dp(){
+  $.ajax({
+  method:"POST",
+  url:"php/fetch_receiver.php",
+  data:{
+    id:id,table:table
+  },
+  success:function(data){
+     console.log(data);
+    var data=JSON.parse(data);
+     console.log(data);
+    
+$(".user_profile").html("");
+$(".user_profile").html(data['profile']);
+
+$("#message_show").html("");
+$("#message_show").html(data['chat']);
+element.scrollTop = element.scrollHeight;
+
+if ($( ".send_message_button" ).hasClass('disabled')) {
+	$( ".send_message_button" ).removeClass( 'disabled');
+} 
+
+
+  },
+})
+
+}
         
 
           
       
+        
+          
+        $(document).on("click",".send_message_button",function(){
+          send_message();
+        
+      
+})
+
+
+function send_message(){
+  
+  var table=$("#send_message").data("table");
+         var category=$("#send_message").data("category");
+            var id=$("#send_message").data('id');
+            var msg=$(".input_message").val();
+            // console.log(msg);
+
+            $(".input_message").val("");
+
+            msg.scrollTop = 0;
+
+            // console.log(table);
+            // console.log(category);
+            // console.log(id);
+
+      if(msg!=''){
+     
+      
+$.ajax({
+  method:"POST",
+  url:"php/send_message.php",
+  data:{
+    id:id,category:category,msg:msg
+  },
+  success:function(data){
+    console.log(data);
+
+
+
+
+  },
+})
+
+      }
+
+}
+
+
+$('.input_message').keydown(function(e){
+  if(e.which==13){
+    send_message();
+  }
+});
+
+
+        
+
+        
 
           
- 
-          $( "#datepicker" ).datepicker();
-         
-         
-            $(".project_id").on("blur",function(){
-               // console.log($(this).val());
-                var p_id=$(this).val();
-               // console.log($("#datepicker").val());
-
-                $.ajax({
-                 url:"php/admin/find_project.php",
-                 method:"post",
-                 data:{id:p_id},
-                 beforeSend:function(){
-                     $("#p_error").text('');
-                 },
-                 success:function(data){
-                     if(data=="yes"){
-                        $("#p_error").text(''); 
-                        vali=0;  
-                     }
-                     else{
-                        $("#p_error").text("this project id don't exist");
-                        vali++;
-console.log(vali);
-                     }
-
-                 }
-
-                });
-                    
-  
-});
-           });
+      
+        });
         </script>
 
 
-<script>
-    function validate_p_id(){
-  console.log("come");
-          // return false;
-          if(vali==0){
-              return true;
-          }
-          else{
-            return false;
-          }
-         
-          
-        }
 
-  </script>
       
 
 

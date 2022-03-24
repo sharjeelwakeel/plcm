@@ -4,7 +4,28 @@ include("session/check_session.php");
 include_once("connection/connection.php");
 
 
+
+// date("Y-m-d H:i:s");;
+
 $id=$_SESSION['id'];
+
+
+$query="select * from chat where r_id=".$id." and status='unseen' order by msg_id desc limit 1";
+
+$chat=mysqli_query($conn,$query);
+
+if(mysqli_num_rows($chat)>0){
+  $res=mysqli_fetch_assoc($chat);
+  $_SESSION['c_chat']=$res['date'];
+}
+else{
+
+  $_SESSION['c_chat']=date("Y-m-d H:i:s");
+  
+}
+
+
+
 
 $query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
 //echo $query;
@@ -122,7 +143,7 @@ viewBox="0 0 172 172"
 style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#198754"><path d="M86,14.00188c-43.45687,0 -78.87812,30.44937 -78.87812,68.55812c0,22.11813 12.12062,41.37406 30.73156,53.965c-0.02687,0.73906 0.02688,1.935 -0.94062,5.53625c-1.20938,4.44781 -3.64156,10.72313 -8.57313,17.79125l-3.50719,5.02563h6.1275c21.23125,0 33.51313,-13.84063 35.42125,-16.05781c6.31563,1.47812 12.81938,2.29781 19.61875,2.29781c43.45688,0 78.87813,-30.44938 78.87813,-68.55813c0,-38.10875 -35.42125,-68.55812 -78.87813,-68.55812zM86,20.39813c40.48719,0 72.48188,28.03062 72.48188,62.16187c0,34.13125 -31.99469,62.16188 -72.48188,62.16188c-7.01437,0 -13.62562,-0.67188 -19.83375,-2.29781l-1.98875,-0.52406l-1.30344,1.59906c0,0 -9.93031,11.20687 -25.78656,13.90781c2.87563,-5.18688 4.99875,-10.02438 5.97969,-13.67938c1.38406,-5.09281 1.41094,-8.53281 1.41094,-8.53281v-1.76031l-1.47813,-0.94063c-18.1675,-11.55625 -29.48187,-29.44156 -29.48187,-49.93375c0,-34.13125 31.99469,-62.16187 72.48187,-62.16187zM51.6,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88zM86,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88zM120.4,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88z"></path></g></g></svg>
 
       </a>
-<span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+<span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle dot_chat_notify <?php echo(mysqli_num_rows($chat)>0)?"d-block":"d-none"; ?>">
     <span class="visually-hidden">New alerts</span>
   </span>
 
@@ -376,7 +397,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
         $(document).ready(function(){
 
           setInterval(function(){ 
-	
+            console.log("notify");
             $.ajax({
                  url:"php/notify_alert.php",
                  method:"post",
@@ -417,6 +438,55 @@ audio.play();
         
 
                 });
+
+
+
+
+                setInterval(function(){ 
+	
+  $.ajax({
+       url:"php/chat_alert.php",
+       method:"post",
+      
+       success:function(data){
+
+        console.log("chat");
+        var str=JSON.parse(data);
+          console.log(str);
+         
+          if(str['status']==1){
+            
+            $(".notify_alert").append(str['model']);
+            $(".notify_alert").removeClass("d-none");
+            $(".notify_alert").addClass("d-block");
+            $(".dot_chat_notify").removeClass("d-none");
+            $(".dot_chat_notify").addClass("d-block");
+          //  $(".audio")[0].play();
+          var audio = new Audio("media/audio.mp3");
+audio.play();
+            setTimeout(function() {
+              $(".notify_alert").removeClass("d-block");
+            $(".notify_alert").addClass("d-none");
+            $(".notify_alert").html("");
+            }, 10000);
+
+
+          }
+          else{
+          //  console.log("i run");
+          }
+
+       }
+
+      });
+          
+
+
+}, 3000);//run this thang every 2 seconds
+
+
+      
+
 
 
                 $(".notify_close").click(function(){

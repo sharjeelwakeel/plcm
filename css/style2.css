@@ -200,6 +200,88 @@ menu li a:hover>svg>path{
                                 }
                                 
                                 /*------------------------------add schedule end------------------*/
+
+
+
+
+
+
+
+
+
+                                  /*------------------------------Scroll start------------------*/
+
+                                  *::-webkit-scrollbar {
+                                    width: 10px; 
+                                    
+                                    border-radius: 20px;              /* width of the entire scrollbar */
+                                  }
+                                  
+                                  *::-webkit-scrollbar-track {
+                                       /* color of the tracking area */
+                                  }
+                                  
+                                  *::-webkit-scrollbar-thumb {
+                                    background-color: #c4c3c2;    /* color of the scroll thumb */
+                                    border-radius: 20px;       /* roundness of the scroll thumb */
+                                    border: 2px solid #c4c3c2;  /* creates padding around scroll thumb */
+                                  }
+                                  
+
+
+
+
+                                  /*------------------------------Scroll end------------------*/
+
+
+
+
+
+
+                                   /*------------------------------chat start------------------*/
+                                   .alert_on_chat{
+                                    left: 19px;
+                                    top: 13px;
+
+                                   }
+
+                                   .message-sec #userTable_length ,.message-sec  #userTable_info ,.message-sec #userTable_paginate{
+                                       display:none;
+                                   }
+                                   @media only screen and (max-width: 767px){
+                                    .message-sec ,.wrapper-message{
+
+                                        width:767px;
+                                    }
+                                }
+
+
+
+
+
+
+
+                                   /*------------------------------chat end------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  
                                 
                                 
                                 
