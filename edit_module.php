@@ -252,7 +252,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
             <span class='text-dark'>Project Name:</span><span><?php echo $pro['p_title']; ?>        </div>
 
     
-  <form  method="POST" class='js-form module'>
+  <form  method="POST" class='js-form module' id='fileUploadForm'>
       <div class='row'>
       <div class='col-md-4'>
         <label class='form-label text-muted fs-5 fw-bold'>subject</label>
@@ -309,8 +309,15 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 </select>
 
        </div>
+       <div class='col-md-4 ' style='margin-top:37px;'>
+         <label class='form-label w-100 d-flex border border-1 justify-content-center align-items-center text-success 'style='height:35px' for='file'><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentcolor" class="bi bi-upload text-success mx-2" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+</svg><span class='text-dark '>uplaod file</span></label>
+         <input type="file" id='file' name='file' class='d-none'>
+       </div>
 
-       <div class='col-md-4 mt-md-0 mt-2'>
+       <div class='col-md-12 mt-md-0 mt-2 text-end'>
        <label class='form-label text-muted fw-bold fs-5 invisible'>Priority</label>
     
      <input type="hidden" value="<?php echo $mod['mod_id'];?>" name="mod_id">
@@ -430,32 +437,75 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
     submitHandler: function (form, values, ajax) {
 
-      ajax({
-        url: 'php/update_module.php',
-        method: 'POST',
-        data: values,
-        async: true,
-        callback: function(data)  {
-         // alert(data);
-        if(data=="success"){
+      
+ var form = $('#fileUploadForm')[0];
+
+var data = new FormData(form);
+
+    
+
+     $.ajax({
+       url: 'php/update_module.php',
+       method: 'POST',
+     data:data,
+       enctype:"multipart/form-data",
+       contentType: false, //this is requireded please see answers above
+           processData: false,
+     
+       callback: function(response)  {
+        console.log("alert");
+         alert(response);
+       if(response=="success"){
+        
+            alert("yes");     
+                     $(".alert").removeClass("d-none");
+                     $(".alert").addClass("d-block");
+                     setTimeout(function() {
+                       $(".alert").removeClass("d-block");
+                     $(".alert").addClass("d-none");
+                 
+                     location.reload();
+                     }, 3000);
+       }
+
+       
+        
+       }
+     });
+   },
+   error:function(){
+     alert("check");
+   }
+ 
+
+
+
+    //   ajax({
+    //     url: 'php/update_module.php',
+    //     method: 'POST',
+    //     data: values,
+    //     async: true,
+    //     callback: function(data)  {
+    //      // alert(data);
+    //     if(data=="success"){
          
-            //    alert("yes");     
-                      $(".alert").removeClass("d-none");
-                      $(".alert").first().html("Work Package Update Successfully");
-                      $(".alert").addClass("d-block");
-                      setTimeout(function() {
-                        $(".alert").removeClass("d-block");
-                      $(".alert").addClass("d-none");
+    //         //    alert("yes");     
+    //                   $(".alert").removeClass("d-none");
+    //                   $(".alert").first().html("Work Package Update Successfully");
+    //                   $(".alert").addClass("d-block");
+    //                   setTimeout(function() {
+    //                     $(".alert").removeClass("d-block");
+    //                   $(".alert").addClass("d-none");
                       
-                      window.location.replace("created_me.php?id="+<?php echo $mod['p_id'];?>);
-                      }, 3000);
-        }
+    //                   window.location.replace("created_me.php?id="+<?php echo $mod['p_id'];?>);
+    //                   }, 3000);
+    //     }
 
         
          
-        }
-      });
-    },
+    //     }
+    //   });
+    // },
   
 
 //   })

@@ -1,6 +1,10 @@
 <?php
 include("session/check_session.php");
 include_once("connection/connection.php");
+$id=$_SESSION['id'];
+$query="select p_title,history.date,history.description from history,projects where m_id=".$id." and projects.p_id=history.p_id order by h_id desc";
+$fetch=mysqli_query($conn,$query);
+
 ?>
 
 <!doctype html>
@@ -16,10 +20,12 @@ include_once("connection/connection.php");
     <title>PLCM</title>
     <link rel='stylesheet' href='css/style.css'>
     <link rel='stylesheet' href='css/style2.css'>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script> -->
   
   </head>
   <body>
@@ -224,122 +230,42 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
         <div class='col-12 text-muted h3 fw-bold'>
                 History
           </div>
-<table class="table">
-  <thead>
-    <tr>
-      
-      <th scope="col" >Project Name</th>
-      <th scope="col">Project Module</th>
-      <th scope="col">Date</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      
-      <td class='text-success fw-bold'>Product lifecycle management</td>
-      <td class='text-dark'>Risk</td>
-      <td>7 jan 2021</td>
-      <td><button class='btn btn-success btn-sm '>view</td>
-    </tr>
-    <tr>
-     
-    <!-- <td class='text-success fw-bold'>Product lifecycle management</td>
-      <td>Schdule</td>
-      <td>7 jan 2021</td>
-      <td><button class='btn btn-success btn-sm'>view</td></tr>
 
-    <tr>
-     
-    <td class='text-success fw-bold'>Product lifecycle management</td>
-      <td>Cost</td>
-      <td>7 jan 2021</td>
-      <td><button class='btn btn-success btn-sm'>view</td></tr>
+       
+          <div class="table-responsive mt-2">
+<table id="userTable" class=' table table-hover '>
+        <thead>
+            <th>Project Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            
+        </thead>
+        <tbody>
+           <?php 
+           if(mysqli_num_rows($fetch)>0){
+           while($fet=mysqli_fetch_assoc($fetch)){?>
+           <tr>
+             <td class='text-success fw-bold'><?php echo $fet['p_title'];?></td>
+             <td><?php echo $fet['description'];?></td>
+             <td><?php echo date("d-M-Y", strtotime( $fet['date']));?></td>
+          
+           </tr>
 
+           <?php }} ?>
+             
+        </tbody>
+    </table>
+    
 
-      <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
+                </div><!--table_responsive-->
+           
 
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
+  </div><!--col-12-->
 
 
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
 
 
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
 
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr>
-
-       <tr>
-     
-     <td class='text-success fw-bold'>Product lifecycle management</td>
-       <td>Cost</td>
-       <td>7 jan 2021</td>
-       <td><button class='btn btn-success btn-sm'>view</td></tr> -->
-  </tbody>
-</table> 
 </div><!--bg-light-->
 </div><!--col-md-9-->
 
@@ -382,10 +308,15 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src='js/just-validate.js'></script>
     <script>
         var vali=0;
         $(document).ready(function(){
+
+
+          $('#userTable').DataTable();
         
 
           

@@ -45,6 +45,25 @@
 
 
                                 /*------------------------- index start-------------------*/
+                                .top_color{
+                                    color:rgba(0,0,0,.55);
+                                }
+
+                                .top_color:hover{
+                                    color:#198754;
+                                }
+                                .admin_chat_notify_top{
+                                    top: 13px;
+                                    left: 43px;
+                                }
+
+                                .admin_notify_top{
+                                    top: 13px;
+                                    left: 55px;
+                                }
+
+                                
+
 .menu{
     list-style:none;
 }

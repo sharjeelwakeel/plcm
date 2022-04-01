@@ -24,7 +24,7 @@ if(mysqli_num_rows($priority)>0){
       $query="select * from admin where a_id=".$id;
       $admin=mysqli_query($conn,$query);
       $ad=mysqli_fetch_assoc($admin);
-      $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+      $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
       <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
      
 <span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
@@ -42,7 +42,7 @@ if(mysqli_num_rows($priority)>0){
       $query="select * from members where m_id=".$id;
       $members=mysqli_query($conn,$query);
       $mbr=mysqli_fetch_assoc($members);
-      $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+      $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
       <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
      
 <span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
@@ -63,7 +63,7 @@ if(mysqli_num_rows($priority)>0){
     $query="select * from admin where a_id=14";
     $admin=mysqli_query($conn,$query);
     $ad=mysqli_fetch_assoc($admin);
-    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
     <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
    
 
@@ -87,7 +87,7 @@ if(mysqli_num_rows($priority)>0){
   $member=mysqli_query($conn,$query);
   if(mysqli_num_rows($member)>0){
   while($mbr=mysqli_fetch_assoc($member)){
-    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
     <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
    
    </td>
@@ -109,7 +109,7 @@ else{
   $query="select * from admin";
 $admin=mysqli_query($conn,$query);
 $ad=mysqli_fetch_assoc($admin);
-    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
     <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
    
 
@@ -126,7 +126,7 @@ $members=mysqli_query($conn,$query);
 
 if(mysqli_num_rows($members)>0){
   while($mbr=mysqli_fetch_assoc($members)){
-    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
     <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
    
    </td>

@@ -18,7 +18,7 @@ if(isset($_REQUEST['id'])){
 //echo $query;
   $assign=mysqli_query($conn,$query);
 
-  $query="select f_name,mod_id,subject,type,status,priority,module.date from module,members where p_id=".$pro['p_id']." and m_id=assign_id";
+  $query="select f_name,mod_id,subject,type,status,priority,module.date,m_file_path from module,members where p_id=".$pro['p_id']." and m_id=assign_id";
 
   $fetch=mysqli_query($conn,$query);
 
@@ -279,6 +279,15 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                           <button class="btn btn-success btn-sm delete" data-bs-toggle="tooltip" data-bs-html="true" title="<em>delete</em>" data-id="<?php echo $fet['mod_id'];?>" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
   <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
 </svg></button>
+<?php if($fet['m_file_path']!=NULL && !empty($fet['m_file_path'])){?>
+<a class="btn btn-success btn-sm fw-bold" data-bs-toggle="tooltip" data-bs-html="true" title="<em >downlaod</em> " href="<?php echo"admin/".$fet['m_file_path'];?>" download>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentcolor" class="bi bi-upload fw-bold mx-2" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+</svg>
+</a>
+
+<?php }?>
       
                                   </td>
            </tr>

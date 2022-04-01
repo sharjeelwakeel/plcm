@@ -35,7 +35,11 @@ if($projects=mysqli_query($conn,$query)){
 }
 
 
-$query="select p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id." and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id."  and u_id=".$id.") order by n_id desc";;
+
+
+//notification query
+
+$query="select n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id." and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id."  and u_id=".$id.") order by n_id desc";;
 
 // "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
 
@@ -65,7 +69,7 @@ $check=mysqli_query($conn,$query);
 //select notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=33 and u_id=33) or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=33 and u_id=33) order by n_id desc limit 1 offset 0;
 
 
-//
+//notification  query end
 
 ?>
 
@@ -225,10 +229,19 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   <?php if(mysqli_num_rows($result)>0){
     while($row=mysqli_fetch_assoc($result))
     { ?>
-      <a href="detail_project.php?id=<?php echo $row['p_id']; ?>" class="text-decoration-none">
+      <a href="detail_project.php?id=<?php echo $row['p_id']; ?>&&n_id=<?php echo $row['n_id']; ?>" class="text-decoration-none">
       <div class='bg-light d-flex flex-column  py-3 rounded-3 mt-2'>
     <div class='msg px-2'>
-  <span class='text-success fw-bold' ><?php  echo ($row['u_category']=="admin")? $row['u_category']:$row['f_name'];?> </span><span class="text-dark <?php echo ($row['status']=="unseen")?'fw-bold':'';?>"> <?php echo $row['description']." ".$row['name']." ".$row['p_title'] ?> </span>
+  <span class='text-success fw-bold' ><?php  if($row['u_category']=='admin'){
+  $name='Zeeshan javed';
+}
+else{
+  $query="select * from members where m_id=".$row['c_id'];
+  $fetch_member=mysqli_query($conn,$query);
+  $ft=mysqli_fetch_assoc($fetch_member);
+  $name=$ft['f_name']." ".$ft['l_name'];
+
+} echo $name; ?> </span><span class="text-dark <?php echo ($row['status']=="unseen")?'fw-bold':'';?>"> <?php echo $row['description']." ".$row['name']." ".$row['p_title'] ?> </span>
 
 </div><!--msg-->
 <small class='date text-end d-block me-4 text-muted ' >
@@ -455,7 +468,7 @@ audio.play();
           console.log(str);
          
           if(str['status']==1){
-            
+
             $(".notify_alert").append(str['model']);
             $(".notify_alert").removeClass("d-none");
             $(".notify_alert").addClass("d-block");

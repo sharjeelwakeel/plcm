@@ -24,6 +24,7 @@ if(isset($_REQUEST['id'])){
   $fetch=mysqli_query($conn,$query);
 
   
+  
 
 
 }
@@ -258,8 +259,8 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 </p>
 <div class="collapse p-0" id="collapseExample">
   <div class="card card-body ">
-  <form  method="POST" class='js-form module'>
-      <div class='row'>
+  <form  method="POST" class='js-form module' enctype="multipart/form-data" id="fileUploadForm">
+      <div class='row justify-content-start '>
       <div class='col-md-2'>
         <label class='form-label text-muted fs-5 fw-bold'>subject</label>
         <input class='form-control'placeholder='subject' name='subject' data-validate-field='subject'>
@@ -315,11 +316,18 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 </select>
 
        </div>
+       <div class='col-md-10 mt-4'>
+         <label class='form-label w-100 d-flex border border-1 justify-content-center align-items-center text-success 'style='height:50px' for='file'><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentcolor" class="bi bi-upload text-success mx-2" viewBox="0 0 16 16">
+  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+</svg><span class='text-dark '>uplaod file</span></label>
+         <input type="file" id='file' name='file' class='d-none'>
+       </div>
 
        <div class='col-md-2 mt-md-0 mt-2'>
        <label class='form-label text-muted fw-bold fs-5 invisible'>Priority</label>
     
-       <input type="hidden" class='form-label' value="<?php echo $pro['p_id']; ?>" name="p_id">
+       <input type="hidden" class='form-label' name="p_id"  value="<?php echo $pro['p_id']; ?>">
        
         <button name='module' class='btn btn-outline-success mt-md-4'>create</button>
 
@@ -473,16 +481,27 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
     submitHandler: function (form, values, ajax) {
 
-      ajax({
+
+ var form = $('#fileUploadForm')[0];
+
+ var data = new FormData(form);
+
+     
+
+      $.ajax({
         url: 'php/insert_module.php',
         method: 'POST',
-        data: values,
-        async: true,
-        callback: function(data)  {
-         // alert(data);
-        if(data=="success"){
+      data:data,
+        enctype:"multipart/form-data",
+        contentType: false, //this is requireded please see answers above
+            processData: false,
+      
+        callback: function(response)  {
+         console.log("alert");
+          alert(response);
+        if(response=="success"){
          
-              //  alert("yes");     
+             alert("yes");     
                       $(".alert").removeClass("d-none");
                       $(".alert").addClass("d-block");
                       setTimeout(function() {
@@ -498,6 +517,9 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
         }
       });
     },
+    error:function(){
+      alert("check");
+    }
   
 
   })

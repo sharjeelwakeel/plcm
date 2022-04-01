@@ -18,11 +18,15 @@ if(isset($_REQUEST['id'])){
   else{
     echo"no run";
   }
-  $query="update notifications set status='seen' where p_id=".$id;
+
+  if(isset($_REQUEST['n_id'])){
+    $n_id=$_REQUEST['n_id'];
+  $query="update notifications set status='seen' where p_id=".$id." and n_id=".$n_id;
 
  if(mysqli_query($conn,$query)){
    
  }
+}
  $query="select * from projects where p_id=".$id;
 //  echo $query;
 //  exit(1);

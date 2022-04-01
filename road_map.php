@@ -10,24 +10,17 @@ if(isset($_REQUEST['id'])){
   $id=$_REQUEST['id'];
   $m_id=$_SESSION['id'];
 
-  $query="update assign_projects set m_status='seen' where p_id=".$id. " and m_id=".$m_id;
-//echo $query;
-  if(mysqli_query($conn,$query)){
+  $query="select p_title,issue_date,end_date,m_id from projects,assign_projects where m_id=".$m_id." and assign_projects.p_id=projects.p_id and projects.p_id=".$id;
+$result=mysqli_query($conn,$query);
+$fet=mysqli_fetch_assoc($result);
 
-  }
-  else{
-    echo"no run";
-  }
-  $query="update notifications set status='seen' where p_id=".$id;
+$query="SELECT subject,s_date,e_date from module,schedule where module.p_id=schedule.p_id and schedule.p_id=".$id." and mod_id=m_id";
 
- if(mysqli_query($conn,$query)){
-   
- }
- $query="select * from projects where p_id=".$id;
-//  echo $query;
-//  exit(1);
- $res=mysqli_query($conn,$query);
- $res=mysqli_fetch_assoc($res);
+$fetch=mysqli_query($conn,$query);
+
+
+
+
 }
 
 
@@ -46,10 +39,12 @@ if(isset($_REQUEST['id'])){
     <title>PLCM</title>
     <link rel='stylesheet' href='css/style.css'>
     <link rel='stylesheet' href='css/style2.css'>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script> -->
+
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
   
   </head>
   <body>
@@ -211,17 +206,17 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
          
 
-            <li><a class="dropdown-item text-light fw-bold " href="detail_project.php?id=<?php echo $res['p_id']?>">Review Proposal</a></li>  
+            <li><a class="dropdown-item text-light fw-bold " href="detail_project.php?id=<?php echo $id?>">Review Proposal</a></li>  
             <li><hr class="dropdown-divider text-light"></li>
-            <li><a class="dropdown-item text-light fw-bold active" href="road_map.php?id=<?php echo $res['p_id']?>">Road Map</a></li>         
+            <li><a class="dropdown-item text-light fw-bold active" href="road_map.php?id=<?php echo $id?>">Road Map</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="work_packages.php?id=<?php echo $res['p_id']?>">Work Package</a></li>         
+              <li><a class="dropdown-item text-light fw-bold" href="work_packages.php?id=<?php echo $id?>">Work Package</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="assign_me.php?id=<?php echo $res['p_id']?>">Assigned to me</a></li>         
+              <li><a class="dropdown-item text-light fw-bold" href="assign_me.php?id=<?php echo $id?>">Assigned to me</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="created_me.php?id=<?php echo $res['p_id']?>">Created by me</a></li>         
+              <li><a class="dropdown-item text-light fw-bold" href="created_me.php?id=<?php echo $id?>">Created by me</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="add_schedule.php?id=<?php echo $res['p_id']?>">Add Schedule</a></li>         
+              <li><a class="dropdown-item text-light fw-bold" href="add_schedule.php?id=<?php echo $id?>">Add Schedule</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
               <!-- <li><a class="dropdown-item text-light fw-bold" href="#">Add Quality</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
@@ -244,64 +239,93 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
         <div class='col-12 text-muted h3 fw-bold'>
                 Road Map
           </div>
-          <h3 class='text-center text-success fw-bold'><?php echo $res['p_title'] ?></h3>
-          <h5 class=' text-dark fw-bold'>Problem Statement</h5>   
-          <div class='text-dark ' style="text-align:justify">
-          <?php echo $res['p_problem'] ?>
-          <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit  -->
 
-</div>
+          <div class='row mt-4'>
+            <div class='col-12 border border-start-0 border-end-0 border-top-0 border border-success p-0'><span class="bg-success px-5 text-light fw-bold mt-1 d-inline-block">Projects</span></div>
+         
+         
 
-<h5 class=' text-dark fw-bold'>Problem Description</h5>   
-          <div class='text-dark ' style="text-align:justify">
-          <?php  $str= base64_decode($res['p_description']); 
-    echo $str;
-    ?>
-          <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
-or, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
-or, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
-or, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
-or, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit  -->
+            
+          
+      
+        
+             <div class='text-success fw-bold border-0 my-4 col-12'><?php echo $fet['p_title'];?>:<span class='text-secondary'><?php   $s_date = date("Y-m-d", strtotime ($fet['issue_date']));
+                                                                                                                        $e_date = date("Y-m-d", strtotime ($fet['end_date']));
 
-</div>
+                                                                                                               
+                                                                                                                           $startDate = new DateTime($s_date);
+$endDate = new DateTime($e_date);
 
-<a href='<?php echo "admin/".$res['file_path'] ?>' downlaod>downlaod proposal</a>
+$difference = $startDate->diff($endDate);
+//echo $difference->format("%a"); 
+echo $difference->d ; 
+// echo $difference->m; 
+                                                                                                               
+                                                                                                               
+                                                                                                               
+                                                                                                               
+                                                                                                                ?> Day left</span></div>
+       
+          
+       <div class='col-12 border border-start-0 border-end-0 border-top-0 border border-success p-0'><span class="bg-success px-5 text-light fw-bold mt-1 d-inline-block">Modules</span></div>
+        
+       <div class='col-12'>
+
+        
+       <div class="table-responsive mt-2 road_map">
+<table id="userTable" class=' table table-hover border-0 '>
+        <thead>
+            <th class='invisible ' style="margin-top:-20px"></th>
+           
+            
+        </thead>
+        <tbody>
+           <?php 
+           if(mysqli_num_rows($fetch)>0){
+           while($fet=mysqli_fetch_assoc($fetch)){ if($fet['e_date']!=NULL){?>
+           
+           <tr>
+             
+           <td class='text-success fw-bold border-0 mt-2 col-12'><?php echo $fet['subject'];?>:<span class='text-secondary'><?php   $s_date = date("Y-m-d", strtotime ($fet['s_date']));
+                                                                                                                        $e_date = date("Y-m-d", strtotime ($fet['e_date']));
+
+                                                                                                               
+                                                                                                                           $startDate = new DateTime($s_date);
+$endDate = new DateTime($e_date);
+
+$difference = $startDate->diff($endDate);
+//echo $difference->format("%a"); 
+echo $difference->d ; 
+// echo $difference->m; 
+                                                                                                               
+                                                                                                               
+                                                                                                               
+                                                                                                               
+                                                                                                                ?> Day left</span></td>
+       
+      
+          
+           </tr>
+
+           <?php }}} ?>
+             
+        </tbody>
+    </table>
+    
+
+                </div><!--table_responsive-->
+       </div>
+      
+      </div>
+
+
+
+         
+             
+             
+         
+         
+       
 </div><!--bg-light-->
 </div><!--col-md-9-->
 
@@ -344,69 +368,23 @@ minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src='js/just-validate.js'></script>
     <script>
         var vali=0;
         $(document).ready(function(){
         
 
-          
+          $('#userTable').DataTable();
       
 
           
  
-          $( "#datepicker" ).datepicker();
-         
-         
-            $(".project_id").on("blur",function(){
-               // console.log($(this).val());
-                var p_id=$(this).val();
-               // console.log($("#datepicker").val());
-
-                $.ajax({
-                 url:"php/admin/find_project.php",
-                 method:"post",
-                 data:{id:p_id},
-                 beforeSend:function(){
-                     $("#p_error").text('');
-                 },
-                 success:function(data){
-                     if(data=="yes"){
-                        $("#p_error").text(''); 
-                        vali=0;  
-                     }
-                     else{
-                        $("#p_error").text("this project id don't exist");
-                        vali++;
-console.log(vali);
-                     }
-
-                 }
-
-                });
-                    
-  
-});
+    
            });
         </script>
 
-
-<script>
-    function validate_p_id(){
-  console.log("come");
-          // return false;
-          if(vali==0){
-              return true;
-          }
-          else{
-            return false;
-          }
-         
-          
-        }
-
-  </script>
-      
 
 
 

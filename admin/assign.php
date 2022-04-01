@@ -7,7 +7,7 @@ include_once("connection/connection.php");
 
 
 if(isset($_REQUEST['add'])){
-  
+  $id=$_SESSION['id'];
   $mid=mysqli_real_escape_string($conn,$_REQUEST['id']);
   $pid=mysqli_real_escape_string($conn,$_REQUEST['p_id']);
     $description=mysqli_real_escape_string($conn,$_REQUEST['description']);
@@ -35,7 +35,7 @@ if(isset($_REQUEST['add'])){
         $name="assign";
         $category="admin";
 
-        $query="insert into notifications(p_id,u_id,name,u_category)values(".$pid.",".$mid.",'".$name."','".$category."')";
+        $query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$pid.",".$id.",".$mid.",'".$name."','admin','assign project ')";
       
       
         mysqli_query($conn,$query);

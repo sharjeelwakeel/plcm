@@ -24,7 +24,7 @@ if(mysqli_num_rows($priority)>0){
       $query="select * from admin where a_id=".$id;
       $admin=mysqli_query($conn,$query);
       $ad=mysqli_fetch_assoc($admin);
-      $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+      $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
       <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
      
 <span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
@@ -44,7 +44,7 @@ if(mysqli_num_rows($priority)>0){
       $query="select * from members where m_id=".$id;
       $members=mysqli_query($conn,$query);
       $mbr=mysqli_fetch_assoc($members);
-      $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+      $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
       <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
      
 <span class='position-absolute alert_on_chat translate-middle p-1 bg border border-light rounded-circle'>
@@ -65,7 +65,7 @@ if(mysqli_num_rows($priority)>0){
     $query="select * from admin where a_id=14";
     $admin=mysqli_query($conn,$query);
     $ad=mysqli_fetch_assoc($admin);
-    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
     <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
    
 
@@ -88,7 +88,7 @@ else{
   $member=mysqli_query($conn,$query);
   if(mysqli_num_rows($member)>0){
   while($mbr=mysqli_fetch_assoc($member)){
-    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
     <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
    
    </td>
@@ -108,7 +108,7 @@ else{
   $query="select * from admin";
 $admin=mysqli_query($conn,$query);
 $ad=mysqli_fetch_assoc($admin);
-    $user.="<tr data-id=" .$ad['a_id']." data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
+    $user.="<tr data-id='" .$ad['a_id']."' data-category='1' class='bg-success profile' data-table='admin' style='cursor:pointer'>
     <td class='position-relative border-light'><img src='admin/".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $ad['f_name']."</span>
    
 
@@ -125,7 +125,7 @@ $members=mysqli_query($conn,$query);
 
 if(mysqli_num_rows($members)>0){
   while($mbr=mysqli_fetch_assoc($members)){
-    $user.=" <tr data-id=". $mbr['m_id']." data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
+    $user.=" <tr data-id='". $mbr['m_id']."' data-category='1' class='bg-success profile' data-table='members' style='cursor:pointer'> 
     <td class='position-relative border-light'><img src='admin/".$mbr['img_path']."' class='rounded-circle' style='height:50px;width:50px'><span class='text-light fw-bold ps-2 text-capitalize'>". $mbr['f_name']." ".$mbr['l_name']."</span>
    
    </td>
@@ -433,8 +433,17 @@ var filter=document.getElementById("userTable_filter").firstElementChild.firstCh
 filter.textContent="";
 
 element.scrollTop = element.scrollHeight;
+
+
+
         var vali=0;
-        var id,category,table;
+        var fetch_id;
+        var fetch_table;
+        var interval;
+        var interval2;
+        var scrollHeight;
+        var flag=true;
+        // var id,category,table;
         $(document).ready(function(){
 
 
@@ -456,17 +465,30 @@ element.scrollTop = element.scrollHeight;
           // alert($(this).data("table"));
 
             // console.log($(this).data("table"));
+           
 
-             table=$(this).data("table");
-          category=$(this).data("category");
-             id=$(this).data('id');
+           let  table=$(this).data("table");
+        let   category=$(this).data("category");
+          let   id=$(this).data('id');
+          fetch_id=id;
+          fetch_table=table;
+             console.log("profile:"+id);
 
             $("#send_message").attr("data-id",id);
             $("#send_message").attr("data-category",category);
             $("#send_message").attr("data-table",table);
+
+            
    
-            fetch_chat_receiver_dp();
-            setInterval(function () { fetch_chat_receiver_dp();
+            fetch_chat_receiver_dp(id,table,category);
+
+             
+      interval=      setInterval(function () {
+         if(flag==true){
+          console.log(" setinterval:"+id);
+          console.log("interval_fetch_id:"+fetch_id);
+              fetch_chat_receiver_dp(id,table,category);
+            }
            }, 1000);
       
 
@@ -475,24 +497,35 @@ element.scrollTop = element.scrollHeight;
 
 
         
-function fetch_chat_receiver_dp(){
+function fetch_chat_receiver_dp(id,table,category){
+  console.log("fetch_id:"+fetch_id);
+
+  console.log("table:"+fetch_table);
+  
   $.ajax({
   method:"POST",
   url:"php/fetch_receiver.php",
   data:{
-    id:id,table:table
+    id:fetch_id,table:fetch_table
   },
   success:function(data){
-     console.log(data);
+   //  console.log(data);
     var data=JSON.parse(data);
-     console.log(data);
+   //  console.log(data);
     
 $(".user_profile").html("");
 $(".user_profile").html(data['profile']);
 
 $("#message_show").html("");
 $("#message_show").html(data['chat']);
-element.scrollTop = element.scrollHeight;
+ element.scrollTop = element.scrollHeight;
+ scrollHeight=element.scrollTop;
+
+ console.log("scrollHeight:"+scrollHeight);
+
+
+
+
 
 if ($( ".send_message_button" ).hasClass('disabled')) {
 	$( ".send_message_button" ).removeClass( 'disabled');
@@ -518,11 +551,11 @@ if ($( ".send_message_button" ).hasClass('disabled')) {
 
 function send_message(){
   
-  var table=$("#send_message").data("table");
-         var category=$("#send_message").data("category");
-            var id=$("#send_message").data('id');
-            var msg=$(".input_message").val();
-            // console.log(msg);
+  let table=$("#send_message").data("table");
+         let  category=$("#send_message").data("category");
+          let  id=$("#send_message").data('id');
+            let msg=$(".input_message").val();
+           
 
             $(".input_message").val("");
 
@@ -533,16 +566,22 @@ function send_message(){
             // console.log(id);
 
       if(msg!=''){
-     
+       // var s_id=$("#send_message").data('id');
+
+        console.log("send_message:"+id);
+       var attr= $("#send_message").data("id");
+        console.log("attr send message value:"+attr);
+
       
 $.ajax({
   method:"POST",
   url:"php/send_message.php",
   data:{
-    id:id,category:category,msg:msg
+    id:fetch_id,category:category,msg:msg
   },
   success:function(data){
-    console.log(data);
+//    console.log(data);
+flag=true;
 
 
 
@@ -562,7 +601,46 @@ $('.input_message').keydown(function(e){
 });
 
 
-        
+$("#message_show").scroll(function(){
+  console.log("element.scrollTop:"+scrollHeight);
+  if(element.scrollTop!= scrollHeight){
+
+    console.log(element.scrollTop);
+    // console.log("scrollHeight"+element.offsetHeight)
+     console.log("make changing")
+    // clearInterval(interval);
+    // clearInterval(interval2);
+    flag=false;
+    
+    
+    
+  }
+  else{
+
+    console.log("not");
+    //alert("yes");
+
+    //embedded their
+    flag=true;
+
+    // interval2=      setInterval(function () {
+    //   let  table=$("#send_message").data("table");
+    //     let   category=$("#send_message").data("category");
+    //       let   id=$("#send_message").data('id');
+    //       fetch_id=id;
+    //       fetch_table=table;
+    //      console.log(" setinterval:"+id);
+    //      console.log("interval_fetch_id:"+fetch_id);
+    //          fetch_chat_receiver_dp(id,table,category);
+    //       }, 1000);
+
+
+
+    //embedded end
+
+  }
+
+});
 
         
 

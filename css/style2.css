@@ -45,6 +45,10 @@
             
             
                                             /*------------------------- index start-------------------*/
+                                            .admin_chat_notify_top{
+                                            top: 13px;
+                                            left: 43px;
+                                        }
             .menu{
                 list-style:none;
                 position:sticky;
@@ -161,6 +165,11 @@ menu li a:hover>svg>path{
 
 .date{
     font-size:12px;
+
+}
+
+.road_map thead tr{
+    display: none;
 }
 
                                  
@@ -168,7 +177,9 @@ menu li a:hover>svg>path{
 
 
 
-
+                                 .dataTables_info,.dataTables_length{
+                                     display:none;
+                                 }
 
 
 
@@ -242,6 +253,7 @@ menu li a:hover>svg>path{
                                    .alert_on_chat{
                                     left: 19px;
                                     top: 13px;
+
 
                                    }
 

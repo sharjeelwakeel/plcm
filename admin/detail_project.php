@@ -5,6 +5,18 @@ include("connection/connection.php");
 $query="select * from projects where p_id=".$_GET['p_id'];
 $result=mysqli_query($conn,$query);
 
+if(isset($_REQUEST['n_id'])){
+  $n_id=$_REQUEST['n_id'];
+$query="update notifications set status='seen' where p_id=".$_GET['p_id']." and n_id=".$n_id;
+
+if(mysqli_query($conn,$query)){
+ 
+}
+}
+
+
+
+
 ?>
 
 <!doctype html>
