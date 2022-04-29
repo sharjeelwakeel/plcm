@@ -55,18 +55,19 @@ $des=$fm['subject']." module replaced name by ".$subject;
 
  //history code
  $query="insert into history (p_id,m_id,description) values(".$fm['p_id'].",".$m_id.",'".$des."')";
+ echo $query;
  mysqli_query($conn,$query);
  
  
  //history code end
-$query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','admin','".$des."')";
+$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','admin','".$des."','work_packages.php')";
 mysqli_query($conn,$query);
 
 if(mysqli_num_rows($notify_assign)>0){
 while($fetch=mysqli_fetch_assoc($notify_assign))
 {
 $c_id=$fetch['m_id'];
-$query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','member','".$des."')";
+$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','member','".$des."','work_packages.php')";
 mysqli_query($conn,$query);
 
 
@@ -74,7 +75,7 @@ mysqli_query($conn,$query);
 echo "success";
 }
 else{
-    echo"success";
+  //  echo"success";
 }
     
 

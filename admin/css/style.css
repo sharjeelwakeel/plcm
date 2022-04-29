@@ -26,6 +26,9 @@
   
     
 }
+.dataTables_info,.dataTables_length{
+    display:none;
+}
 .error{
     display:none;
 }
@@ -143,8 +146,25 @@ display:block;
 
 
 
+                  .email   div.checklist li:hover{
+                        background-color:#198754!important;
+                     }
+                   .email  div.checklist li:hover>*{
+                        background-color:#198754!important;
+                     }
 
+                     .email .e_desc,.email .e_date{
+                         color:#e9ecef!important;
+                         font-size:15px;
+                     }
+                     .email .e_date{
+                        
+                        font-size:10px;
+                    }
 
+                    .email .font_size_mail{
+                        font-size:20px;
+                    }
 
 
                       /*------------------------------view member start------------------*/

@@ -108,7 +108,8 @@ $table='admin';
         else if($r_id==$msg['s_id']  && $msg['category']=='0'){
             if($i==1){
            $chat.=" <div class='d-flex   mt-auto' ><img src='".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5 d-flex flex-column'  style='font-size:16px!important;min-width:132px' >".$msg['msg']."<div class='text-end'style='font-size:10px'>".date(' H:i A',strtotime($msg['date']))."</div></div></div>";
-        }
+       $i++;
+          }
         else{
             $chat.=" <div class='d-flex  mt-1'><img src='".$ad['img_path']."' class='rounded-circle' style='height:50px;width:50px'> <div class='bg rounded-pill p-2 px-4 text-dark fw-normal fs-5 d-flex flex-column'  style='font-size:16px!important;min-width:132px' >".$msg['msg']."<div class='text-end'style='font-size:10px'>".date(' H:i A',strtotime($msg['date']))."</div></div></div>";
         

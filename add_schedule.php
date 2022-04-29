@@ -9,6 +9,15 @@ if(isset($_REQUEST['id'])){
 
   $id=$_REQUEST['id'];
 
+  if(isset($_REQUEST['n_id'])){
+    $n_id=$_REQUEST['n_id'];
+  $query="update notifications set status='seen' where p_id=".$id." and n_id=".$n_id;
+
+ if(mysqli_query($conn,$query)){
+   
+ }
+}
+
 
  $query="select * from projects where p_id=".$id;
   $project=mysqli_query($conn,$query);
@@ -18,11 +27,14 @@ if(isset($_REQUEST['id'])){
 
   // $assign=mysqli_query($conn,$query);
 
-  $query="select mod_id,module.p_id,subject,type,status,priority,s_date,e_date from module,schedule where mod_id=m_id and module.p_id=".$id. " and schedule.p_id=".$id;
+  $query="select c_id,mod_id,module.p_id,subject,type,status,priority,s_date,e_date from module,schedule where mod_id=m_id and module.p_id=".$id. " and schedule.p_id=".$id;
   // echo $query;
    $fetch=mysqli_query($conn,$query);
 // echo mysqli_num_rows($fetch);
 // exit(1);
+
+
+
   
 
 
@@ -49,16 +61,15 @@ if(isset($_REQUEST['id'])){
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script> -->
 
+<!--dhtmlx css and script-->
+ 
+<script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+    <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
+
+<!--dhtmlx csss and script-->
 
 
 
-  <!---datepicker-->
-  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-         rel = "stylesheet">
-      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-      <!--end datepicker links-->
 
 
       <!--addtional css-->
@@ -73,69 +84,13 @@ if(isset($_REQUEST['id'])){
 
         @media only screen and (max-width: 767px){
           .gant_chart{
-            display:none;
+            display:block;
           }
     
 }
         
     </style>
-    <link href="jsgantt.css" rel="stylesheet" type="text/css"/>
-    <script src="jsgantt.js" type="text/javascript"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-
-    google.charts.load('current', {'packages':['gantt']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Task ID');
-      data.addColumn('string', 'name');
-      data.addColumn('string', 'Assigne');
    
-      data.addColumn('date', 'Start Date');
-      data.addColumn('date', 'End Date');
-      data.addColumn('number', 'Duration');
-     data.addColumn('number', 'Percent Complete');
-    
-      data.addColumn('string', 'Dependencies');
-
-      data.addRows([
-        <?php while($fet=mysqli_fetch_assoc($fetch)){  
-          if($fet['s_date']!=NULL){
-$s_month = date("m",strtotime($fet['s_date']));
-
-$s_year = date("Y",strtotime($fet['s_date']));
-
-$s_day = date("d",strtotime($fet['s_date']));
-
-$e_month = date("m",strtotime($fet['e_date']));
-$e_year = date("Y",strtotime($fet['e_date']));
-$e_day = date("d",strtotime($fet['e_date']));
-
-
-         ?>
-
-     
-
-        ["<?php echo $fet['mod_id'] ?>", "<?php  echo $fet['subject'];?>", "<?php  echo $fet['subject'];?>",
-         new Date(<?php echo $s_year;?> ,<?php echo $s_month;?> , <?php echo $s_day;?>), new Date(<?php echo $e_year;?> ,<?php echo $e_month;?> , <?php echo $e_day;?> ), null,0,  null],
-    <?php }} ?>
-      ]);
-
-      var options = {
-        height: 400,
-        gantt: {
-          trackHeight: 50
-        }
-      };
-
-      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
-  </script>
   
   </head>
   <body>
@@ -289,7 +244,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 <section class=' bg '>
   <div class='row m-0 align-items-stretch justify-content-start  h-100' >
 
-  <div class='col-md-2 d-none d-md-block  bg-success rounded  '>
+  <div class='col-md-3 d-none d-md-block  bg-success rounded  '>
 
   <ul class='menu mt-5'>
 
@@ -324,75 +279,14 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
 </div><!--col-md-4-->
 
-<div class='col-md-10 bg-body'>
-<div class='row bg-body pt-3 py-0 ps-3 pe-0  h-auto' >
+<div class='col-md-9 bg-body p-0'>
+<div class='row bg-body  p-0 h-auto m-0' >
         
          
-          <div class='col-12 text-muted h3 fw-bold'>
-            Created by me
-          </div>
-          <div class='col-12 text-muted  fw-bold'>
-            <span class='text-dark'>Project Name:</span><span><?php echo $pro['p_title']; ?>        </div>
 
- 
-
-         
-         <div class='row align-items-stretch justify-content-start   ' style='height:76vh!important'>
-             <div class='col-md-6 h-100'>
-         <div class="table-responsive mt-2 h-100">
-<table id="userTable" class=' table table-hover h-100' style="width:1000px">
-        <thead>
-            <th>ID</th>
-            <th>Type</th>
-            <th>Subject</th>
-            <th>Status</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>Action</th>
-        </thead>
-        <tbody>
-           <?php 
-            $fetch=mysqli_query($conn,$query);
-           if(mysqli_num_rows($fetch)>0){
-           while($fet=mysqli_fetch_assoc($fetch)){?>
-           <tr  data-mod_id=<?php echo $fet['mod_id'];?>  data-p_id=<?php echo $fet['p_id'];?> >
-             
-             <td><?php echo $fet['mod_id'];?></td>
-             <td><?php echo $fet['type'];?></td>
-             <td><?php echo $fet['subject'];?></td>
-             <td><?php echo $fet['status'];?></td>
-             <td><?php echo $fet['s_date']==NULL ?"<input type = 'text' class = 'datepicker-2 form-control'>": date("m-d-Y", strtotime( $fet['s_date']));  ?></td>
-             <td><?php echo $fet['e_date']==NULL ?"<input type = 'text' class = 'datepicker-3 form-control'>": date("m-d-Y", strtotime( $fet['e_date']));?></td>
-             <td>
-               <?php if($fet['s_date']!=NULL){?>
-                          <a class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-html="true" title="<em >update</em> " href="edit_schedule.php?id=<?php echo $fet['p_id']."&& mod_id=".$fet['mod_id'];?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-</svg></a>
-
-<?php  } ?>
-                          <!-- <button class="btn btn-success btn-sm delete" data-bs-toggle="tooltip" data-bs-html="true" title="<em>delete</em>" data-id="<?php echo $fet['mod_id'];?>" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
-  <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
-</svg></button> -->
-      
-                                  </td>
-           </tr>
-
-
-           <?php }} ?>
-             
-        </tbody>
-    </table>
-
-    
-
-                </div><!--table_responsive-->
-                
-                </div><!--col-md-6-->
-
-           <div class='col-md-6 h-100  gant_chart mt-2' style="overflow-x:scroll">
+           <div class='col-md-12 h-100  gant_chart  p-0 mx-0' style="overflow-x:scroll">
                 <!--for gant chart-->
-                <div id="chart_div" class='d-md-block d-none '></div>
+                <div  id="gantt_here" class=' p-0 m-0'style='height:91vh'></div>
 
      
                 </div>
@@ -442,131 +336,101 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
     <script src='js/just-validate.js'></script>
-    <script>
-      
-        $(document).ready(function(){
 
-          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    <script type="text/javascript">
 
-// $( "#datepicker" ).datepicker();
-$( ".datepicker-2" ).datepicker();
-$( ".datepicker-3" ).datepicker();
-          $('#userTable').DataTable();
+gantt.config.date_format = "%Y-%m-%d %H:%i:%s";
+gantt.init("gantt_here");
+gantt.load("php/get_module.php?id=<?php echo $id;?>");
+//  var dp = new gantt.dataProcessor("/process_data.php");
+
+//  var dp=   gantt.createDataProcessor(function(entity, action, data, id){
+//         console.log(server);
+//         console.log(data)
+// let path="/process_data.php";
+//   switch (action) {
+//     case "create":
+//         console.log("return")
+//       return gantt.ajax.post({
+//         headers: { 
+//           "Content-Type": "application/json" 
+//         },
+//         url: server + path,
+//         data: JSON.stringify(data)
+//       });
+//     break;
+//     case "delete":
+// console.log("delete");
+//         break;
+//   }
+//   console.log("hello");
+// });
+
+var dp = gantt.createDataProcessor(function(entity, action, data, id) { 
+
+switch(action) {
+    case "create":
+        let name=data['text'];
+        $.ajax({
+method:"POST",
+url:"php/check_module_detail.php",
+data:{
+name:name
+},
 
 
-  $(document).on("change",".datepicker-3",function(){
-  // alert($(this).val()+$(this).parent().prev().first().val());
- console.log($(this).val());
-console.log($(this).parent().parent().find(".datepicker-2").val());
+success:function(response){
+  if(response=='success'){
+return gantt.ajax.post(
 
-console.log($(this).parent().parent().data("p_id"));
-
-var s_date=$(this).parent().parent().find(".datepicker-2").val();
-var e_date=$(this).val();
-var p_id=$(this).parent().parent().data("p_id");
-var mod_id=$(this).parent().parent().data("mod_id");
-if(s_date!=''){
-
-     
-$.ajax({
-  method:"POST",
-  url:"php/add_schedule.php",
-  data:{
-    p_id:p_id,mod_id:mod_id,s_date:s_date,e_date:e_date
-  },
-  success:function(data){
-    // alert(data);
-
-    if(data=="success"){
-         
-        //  alert("yes");     
-                $(".alert").removeClass("d-none");
-                $(".alert").first().html("Schedule Add Successfully");
-                $(".alert").addClass("d-block");
-                
-                setTimeout(function() {
-                  $(".alert").removeClass("d-block");
-                $(".alert").addClass("d-none");
-                location.reload();
-               
-                        }, 3000);
-  }
+"php/" + 'add_schedule.php',
+data
+);
 }
+},
+
+})//ajax end
+      
+
+    break;
+    case "update":
+        alert('update')
+        
+       return gantt.ajax.post(
+         "php/" + 'add_schedule.php' ,
+             data
+        );
+    break;
+    case "delete":
+        alert('delete')
+        alert(id);
+    //    return gantt.ajax.del(
+    //          server + "/" + entity + "/" + id
+    //    );
+     break;
+}
+
 });
 
-
-  
-}
-else{
-  // alert("no");
-}
-
-
-});
+//  dp.init(gantt);
+//  dp.setTransactionMode("REST");
+</script>
 
 
 
-  $(document).on("click",".delete",function(){
+
+
+
+
+
+
+
+
       
-      var s=$(this).data('id');
-      console.log(s);
-     
-      
-$.ajax({
-  method:"POST",
-  url:"php/module_delete.php",
-  data:{
-    id:s
-  },
-  success:function(data){
-    // alert(data);
-
-    if(data=="success"){
-         
-        //  alert("yes");     
-                $(".alert").removeClass("d-none");
-                $(".alert").first().html("Work Package Delete Successfully");
-                $(".alert").addClass("d-block");
-                
-                setTimeout(function() {
-                  $(".alert").removeClass("d-block");
-                $(".alert").addClass("d-none");
-                location.reload();
-               
-                }, 3000);
-  }
-
-
-    
-    
-
-  },
-})
-      
-    })
-
-
-
-
-          
-      
-      });
-        </script>
-
-
-
-    
-      
-
-
-
 
 
 

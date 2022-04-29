@@ -6,7 +6,7 @@ include_once("../connection/connection.php");
 
 $modal_date=$date=$_SESSION['date'];
 $id=$_SESSION['id'];
-$query="select n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category as u_category from notifications,projects,members where ((notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id. " and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id." and u_id=".$id.")) and (notifications.date>'".$date ."' and status='unseen') order by n_id desc";
+$query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category as u_category from notifications,projects,members where ((notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id. " and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id." and u_id=".$id.")) and (notifications.date>'".$date ."' and status='unseen') order by n_id desc";
 //echo $query;
 $res=mysqli_query($conn,$query);
 $model=null;
@@ -34,14 +34,14 @@ $model.="
   <button type='button' class='btn-close notify_close' data-bs-dismiss='toast' aria-label='Close'></button>
 </div>
 <div class='toast-body bg-light'>
-<a href='detail_project.php?id=".$date['p_id']."&&n_id=".$date['n_id']."' class='text-decoration-none d-block'>
+<a href='".$date['link_page']."?id=".$date['p_id']."&&n_id=".$date['n_id']."' class='text-decoration-none d-block'>
 <span class='text-success fw-bold'>".$name." </span><span class='text-secondary'>".$date['name']." ".$date['description'] ." ".$date['p_title']."</span>
 </a>
 </div>
 </div>";
 
 
-$query="select n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category as u_category from notifications,projects,members where ((notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id. " and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id." and u_id=".$id.")) and (notifications.date>'".$modal_date ."' and status='unseen') order by n_id desc";
+$query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category as u_category from notifications,projects,members where ((notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id. " and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id." and u_id=".$id.")) and (notifications.date>'".$modal_date ."' and status='unseen') order by n_id desc";
 
 $_SESSION['date']=$date['date'];
 $result=mysqli_query($conn,$query);
@@ -59,7 +59,7 @@ while($row=mysqli_fetch_assoc($result)){
     
     }
     $class=($row['status']=='unseen')?'fw-bold':'';
-$array.= "<a href='detail_project.php?id=".$row['p_id']."&&n_id=".$row['n_id']."' class='text-decoration-none'>
+$array.= "<a href='".$row['link_page']."?id=".$row['p_id']."&&n_id=".$row['n_id']."' class='text-decoration-none'>
 <div class='bg-light d-flex flex-column  py-3 rounded-3 mt-2'>
 <div class='msg px-2'>
 <span class='text-success fw-bold' >". $name." </span><span class='text-dark ".  $class."'>". $row['name']." ".$row['description']  ." ".$row['p_title']. "</span>

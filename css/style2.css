@@ -281,6 +281,58 @@ menu li a:hover>svg>path{
 
 
 
+                                   /*--------------------------add schedule start----------*/
+
+                                   .gantt_add{
+                                    display: none;
+                                }
+                                .gantt_task_content{
+                                    background-color: #198754;
+                                }
+                                .gantt_btn_set.gantt_save_btn_set {
+                                    background: #198754;
+                                    text-shadow: 0 -1px 0 #198754;
+                                    color: #fff;
+                                }
+
+                                .gantt_btn_set.gantt_delete_btn_set {
+                                    text-shadow: 0 -1px 0 #e9ecef;
+                                    background: #e9ecef;
+                                    text-shadow: 0 -1px 0 #e9ecef;
+                                    color: black;
+                                    pointer-events: none;
+                                }
+                                
+
+.gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
+    background-color: #198754;
+    color:white;
+}
+
+.gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover>*{
+    color:white;
+}
+
+.gantt_tree_icon.gantt_file {
+    background-image: none;
+}
+
+.gantt_grid_data .gantt_row.gantt_selected, .gantt_grid_data .gantt_row.odd.gantt_selected, .gantt_task_row.gantt_selected {
+    background-color: #e7e9f5;
+}
+
+.gantt_grid_head_cell.gantt_grid_head_add{
+ background-image: url("../admin/web_material/add.png");
+}
+
+                                   /*-------------------------add schedule end-----------*/
+
+
+
+
+
+
+
 
 
 

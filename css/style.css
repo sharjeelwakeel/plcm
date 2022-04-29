@@ -27,7 +27,10 @@ background-color:#efebe9;
 
 /* add thier previous css */
 
-
+.email .e_desc,.email .e_date{
+    color:#e9ecef!important;
+    font-size:15px;
+}
 
                /* ------------signin and create_account start------------------------ */
 

@@ -35,7 +35,7 @@ if(isset($_REQUEST['add'])){
         $name="assign";
         $category="admin";
 
-        $query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$pid.",".$id.",".$mid.",'".$name."','admin','assign project ')";
+        $query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$pid.",".$id.",".$mid.",'".$name."','admin','assign project ','detail_project.php')";
       
       
         mysqli_query($conn,$query);

@@ -7,59 +7,69 @@ include_once("connection/connection.php");
 
 // date("Y-m-d H:i:s");;
 
+
+
 $id=$_SESSION['id'];
 
 
-$query="select * from chat where r_id=".$id." and status='unseen' order by msg_id desc limit 1";
 
-$chat=mysqli_query($conn,$query);
+//chat query start
 
-if(mysqli_num_rows($chat)>0){
-  $res=mysqli_fetch_assoc($chat);
-  $_SESSION['c_chat']=$res['date'];
-}
-else{
 
-  $_SESSION['c_chat']=date("Y-m-d H:i:s");
+// $query="select * from chat where r_id=".$id." and status='unseen' order by msg_id desc limit 1";
+
+// $chat=mysqli_query($conn,$query);
+
+// if(mysqli_num_rows($chat)>0){
+//   $res=mysqli_fetch_assoc($chat);
+//   //echo"if".$res['date'];
+
+//   $_SESSION['c_chat']=$res['date'];
+// }
+// else{
+//  // echo"else".date("Y-m-d H:i:s");
   
-}
+
+//   $_SESSION['c_chat']=date("Y-m-d h:i:s");
+  
+// }
+
+// //chat query end
+
+
+// $query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
+// //echo $query;
+// if($projects=mysqli_query($conn,$query)){
+
+//   // echo "run projects";
+// }
 
 
 
 
-$query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
-//echo $query;
-if($projects=mysqli_query($conn,$query)){
+// //notification query
 
-  // echo "run projects";
-}
+// $query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id." and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id."  and u_id=".$id.") order by n_id desc";;
 
+// // "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
 
+// //echo $query;
 
-
-//notification query
-
-$query="select n_id,c_id, p_title,notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=".$id." and u_id=".$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id."  and u_id=".$id.") order by n_id desc";;
-
-// "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
-
-//echo $query;
-
-$result=mysqli_query($conn,$query);
-if(mysqli_num_rows($result)>0){
-$date=mysqli_fetch_assoc($result);
-$_SESSION['date']=$date['date'];
+// $result=mysqli_query($conn,$query);
+// if(mysqli_num_rows($result)>0){
+// $date=mysqli_fetch_assoc($result);
+// $_SESSION['date']=$date['date'];
 
 
 
-}
+// }
 
-$result=mysqli_query($conn,$query);
+// $result=mysqli_query($conn,$query);
 
-$query="select * from notifications where u_id=".$id." and status='unseen' ";
+// $query="select * from notifications where u_id=".$id." and status='unseen' ";
 
 
-$check=mysqli_query($conn,$query);
+// $check=mysqli_query($conn,$query);
 
 
 
@@ -70,6 +80,8 @@ $check=mysqli_query($conn,$query);
 
 
 //notification  query end
+
+include("php/chat_notify_query.php");
 
 ?>
 
@@ -107,7 +119,7 @@ $check=mysqli_query($conn,$query);
   <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
  
-  <a class="navbar-brand" href="index.php">PLCM</a>
+  <a class="navbar-brand" href="home.php">PLCM</a>
  
  
   <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,13 +144,27 @@ $check=mysqli_query($conn,$query);
         </li>
      
        </ul> 
-      <form class="d-flex me-2">
+      <!-- <form class="d-flex me-2">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
 
 
       <div class=' d-flex align-items-center justify-md-content-start justify-content-around'>
+
+
+      <div class='position-relative mail me-2  d-inline-block d-md-block mt-md-0 mt-2 '>
+        <a href='inbox_mail.php'>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill=" #198754" class="bi bi-envelope" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+</svg>
+</a>
+<span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle dot_mail_notify <?php echo(mysqli_num_rows($get_mails)>0)?"d-block":"d-none"; ?>">
+    <span class="visually-hidden">New alerts</span>
+  </span>
+      </div><!--email-->
+
+
       <div class='position-relative chat ms-2  d-inline-block d-md-block mt-md-0 mt-2 '>
         <a href='chat.php'>
 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -229,7 +255,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   <?php if(mysqli_num_rows($result)>0){
     while($row=mysqli_fetch_assoc($result))
     { ?>
-      <a href="detail_project.php?id=<?php echo $row['p_id']; ?>&&n_id=<?php echo $row['n_id']; ?>" class="text-decoration-none">
+      <a href="<?php echo $row['link_page'];?>?id=<?php echo $row['p_id']; ?>&&n_id=<?php echo $row['n_id']; ?>" class="text-decoration-none">
       <div class='bg-light d-flex flex-column  py-3 rounded-3 mt-2'>
     <div class='msg px-2'>
   <span class='text-success fw-bold' ><?php  if($row['u_category']=='admin'){
@@ -405,12 +431,14 @@ $date   = date('d/m H:i A',strtotime($row['date']));
     -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src='js/just-validate.js'></script>
-    <script>
+    <script src='js/chat_notify.js'></script>
+
+    <!-- <script>
         
         $(document).ready(function(){
 
           setInterval(function(){ 
-            console.log("notify");
+           // console.log("notify");
             $.ajax({
                  url:"php/notify_alert.php",
                  method:"post",
@@ -450,7 +478,7 @@ audio.play();
 }, 3000);//run this thang every 2 seconds
         
 
-                });
+             
 
 
 
@@ -509,8 +537,8 @@ audio.play();
                 })
                     
   
-
-        </script>
+              });
+        </script> -->
 
 
 

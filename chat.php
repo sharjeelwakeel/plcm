@@ -359,9 +359,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
          
        
  
-<div  style="height:15%">
-    <form class='d-flex align-items-center h-100 bg' >
-        <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style="resize:none;height:75%" id="send_message"></textarea>
+<div  style="height:15%" >
+    <form class='d-flex align-items-center h-100 bg send_message_form' >
+        <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style='resize:none;height:75%' id='send_message'></textarea>
+        <!-- <input type='text' class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style="resize:none;height:75%" id="send_message"> -->
         <button type='button' class='btn btn-outline-success rounded-pill me-4 btn-lg disabled send_message_button' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor-fill" viewBox="0 0 16 16">
   <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
 </svg></button>
@@ -427,7 +428,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
 
 var element = document.getElementById("message_show");
-var msg = document.getElementsByClassName("input_message")[0];
+// var msg = document.getElementsByClassName("input_message")[0];
+var msg = document.getElementById("send_message");
+//console.log(msg);
+
 
 var filter=document.getElementById("userTable_filter").firstElementChild.firstChild;
 filter.textContent="";
@@ -472,7 +476,7 @@ element.scrollTop = element.scrollHeight;
           let   id=$(this).data('id');
           fetch_id=id;
           fetch_table=table;
-             console.log("profile:"+id);
+            // console.log("profile:"+id);
 
             $("#send_message").attr("data-id",id);
             $("#send_message").attr("data-category",category);
@@ -485,8 +489,8 @@ element.scrollTop = element.scrollHeight;
              
       interval=      setInterval(function () {
          if(flag==true){
-          console.log(" setinterval:"+id);
-          console.log("interval_fetch_id:"+fetch_id);
+         // console.log(" setinterval:"+id);
+       //   console.log("interval_fetch_id:"+fetch_id);
               fetch_chat_receiver_dp(id,table,category);
             }
            }, 1000);
@@ -498,9 +502,9 @@ element.scrollTop = element.scrollHeight;
 
         
 function fetch_chat_receiver_dp(id,table,category){
-  console.log("fetch_id:"+fetch_id);
+  //console.log("fetch_id:"+fetch_id);
 
-  console.log("table:"+fetch_table);
+ // console.log("table:"+fetch_table);
   
   $.ajax({
   method:"POST",
@@ -521,7 +525,7 @@ $("#message_show").html(data['chat']);
  element.scrollTop = element.scrollHeight;
  scrollHeight=element.scrollTop;
 
- console.log("scrollHeight:"+scrollHeight);
+// console.log("scrollHeight:"+scrollHeight);
 
 
 
@@ -560,17 +564,22 @@ function send_message(){
             $(".input_message").val("");
 
             msg.scrollTop = 0;
+            msg.scrollHeight=0;
+            //console.log("msg.scrollTop="+msg.scrollTop);
+            //console.log("msg.scollHeight="+msg.scrollHeight);
 
-            // console.log(table);
-            // console.log(category);
-            // console.log(id);
+           
+           // console.log("message_check"+msg.length);
 
-      if(msg!=''){
+      if(msg.length!=''){
        // var s_id=$("#send_message").data('id');
+
+      
 
         console.log("send_message:"+id);
        var attr= $("#send_message").data("id");
         console.log("attr send message value:"+attr);
+        msg.length=0;
 
       
 $.ajax({
@@ -580,6 +589,11 @@ $.ajax({
     id:fetch_id,category:category,msg:msg
   },
   success:function(data){
+    $(".send_message_form").find("#send_message").remove();
+       $( ".send_message_form" ).prepend( " <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style='resize:none;height:75%' id='send_message'></textarea>" );
+       $("#send_message").attr("data-id",id);
+            $("#send_message").attr("data-category",category);
+            $("#send_message").attr("data-table",table);
 //    console.log(data);
 flag=true;
 
@@ -594,20 +608,24 @@ flag=true;
 }
 
 
-$('.input_message').keydown(function(e){
-  if(e.which==13){
+$(document).on("keydown","#send_message",function(e){
+  console.log("alert="+e.which);
+  // if(e.which==13){
+    if(e.keyCode==13){
+
+    console.log("enter");
     send_message();
   }
 });
 
 
 $("#message_show").scroll(function(){
-  console.log("element.scrollTop:"+scrollHeight);
+ // console.log("element.scrollTop:"+scrollHeight);
   if(element.scrollTop!= scrollHeight){
 
-    console.log(element.scrollTop);
+//    console.log(element.scrollTop);
     // console.log("scrollHeight"+element.offsetHeight)
-     console.log("make changing")
+  //   console.log("make changing")
     // clearInterval(interval);
     // clearInterval(interval2);
     flag=false;
@@ -617,7 +635,7 @@ $("#message_show").scroll(function(){
   }
   else{
 
-    console.log("not");
+    //console.log("not");
     //alert("yes");
 
     //embedded their

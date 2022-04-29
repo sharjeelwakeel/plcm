@@ -2,6 +2,7 @@
 <?php
 include("session/check_session.php");
 include("connection/connection.php");
+$id=$_GET['p_id'];
 $query="select * from projects where p_id=".$_GET['p_id'];
 $result=mysqli_query($conn,$query);
 
@@ -59,13 +60,15 @@ if(mysqli_query($conn,$query)){
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             
   <li><a class="dropdown-item " href="#">View Projects</a></li>
-  <li><a class="dropdown-item " href="index.php">View Projects</a></li>
+  <li><a class="dropdown-item active" href="detail_project.php?p_id=<?php echo $id;?>">project detail</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="create_project.php">Create Project</a></li>
+            <li><a class="dropdown-item" href="work_packages.php?p_id=<?php echo $id;?>">Work packages</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
+            <li><a class="dropdown-item" href="cost_analysis.php?p_id=<?php echo $id;?>">Cost analysis</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="view_member.php">View Members</a></li>
+            <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="view_member.php">View Members</a></li> -->
             <!-- <li><a class="dropdown-item" href="#">Feasiblity Study</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Projects Proposal And Reviews</a></li>
@@ -127,13 +130,15 @@ if(mysqli_query($conn,$query)){
 
   <ul class='menu '>
       
-  <li><a class="dropdown-item " href="index.php">View Projects</a></li>
+  <li><a class="dropdown-item active" href="detail_project.php?p_id=<?php echo $id;?>">Project detail</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="create_project.php">Create Project</a></li>
+            <li><a class="dropdown-item" href="work_packages.php?p_id=<?php echo $id;?>">Work packages</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
+            <li><a class="dropdown-item" href="cost_analysis.php?p_id=<?php echo $id;?>">Cost analysis</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="view_member.php">View Members</a></li>
+            <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="view_member.php">View Members</a></li> -->
             <!-- <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
             <li><hr class="dropdown-divider"></li>

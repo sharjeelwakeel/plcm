@@ -28,7 +28,7 @@ if(mysqli_num_rows($chat)>0){
 }
 else{
 
-  $_SESSION['c_chat']=date("Y-m-d H:i:s");
+  $_SESSION['c_chat']=date("Y-m-d h:i:s");
   
 }
 
@@ -37,7 +37,7 @@ else{
 
 
 
-$query="select n_id,c_id, p_title,notifications.p_id,notifications.date,status,name,notifications.description,notifications.u_category from notifications,projects where u_id=".$id."  and notifications.p_id=projects.p_id and notifications.u_category='admin' order by n_id desc";
+$query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,name,notifications.description,notifications.u_category from notifications,projects where u_id=".$id."  and notifications.p_id=projects.p_id and notifications.u_category='admin' order by n_id desc";
 
 // "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
 
@@ -68,6 +68,31 @@ $check=mysqli_query($conn,$query);
 
 
 //notification  query end
+
+
+
+//email query start
+$query="select * from emails where m_id=".$id." and status='unseen' order by e_id desc limit 1";
+
+$get_mails=mysqli_query($conn,$query);
+
+if(mysqli_num_rows($get_mails)>0){
+  $mail_data=mysqli_fetch_assoc($get_mails);
+  //echo"if".$res['date'];
+
+  $_SESSION['mail_date']=$mail_data['date'];
+}
+else{
+ // echo"else".date("Y-m-d H:i:s");
+  
+
+  $_SESSION['mail_date']=date("Y-m-d h:i:s");
+  
+}
+
+
+
+//email query end
 
 ?>
 
@@ -154,8 +179,25 @@ $check=mysqli_query($conn,$query);
 </div>
 
 <div class=' d-flex align-items-center justify-md-content-start justify-content-around'>
+
+<div class='position-relative chat ms-2  d-inline-block d-md-block mt-md-0 mt-2 '>
+        <a href='inbox_mail.php' class='nav-link top_color'>Mails
+<!-- <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="20" height="20"
+viewBox="0 0 172 172"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#198754"><path d="M86,14.00188c-43.45687,0 -78.87812,30.44937 -78.87812,68.55812c0,22.11813 12.12062,41.37406 30.73156,53.965c-0.02687,0.73906 0.02688,1.935 -0.94062,5.53625c-1.20938,4.44781 -3.64156,10.72313 -8.57313,17.79125l-3.50719,5.02563h6.1275c21.23125,0 33.51313,-13.84063 35.42125,-16.05781c6.31563,1.47812 12.81938,2.29781 19.61875,2.29781c43.45688,0 78.87813,-30.44938 78.87813,-68.55813c0,-38.10875 -35.42125,-68.55812 -78.87813,-68.55812zM86,20.39813c40.48719,0 72.48188,28.03062 72.48188,62.16187c0,34.13125 -31.99469,62.16188 -72.48188,62.16188c-7.01437,0 -13.62562,-0.67188 -19.83375,-2.29781l-1.98875,-0.52406l-1.30344,1.59906c0,0 -9.93031,11.20687 -25.78656,13.90781c2.87563,-5.18688 4.99875,-10.02438 5.97969,-13.67938c1.38406,-5.09281 1.41094,-8.53281 1.41094,-8.53281v-1.76031l-1.47813,-0.94063c-18.1675,-11.55625 -29.48187,-29.44156 -29.48187,-49.93375c0,-34.13125 31.99469,-62.16187 72.48187,-62.16187zM51.6,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88zM86,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88zM120.4,75.68c-3.80281,0 -6.88,3.07719 -6.88,6.88c0,3.80281 3.07719,6.88 6.88,6.88c3.80281,0 6.88,-3.07719 6.88,-6.88c0,-3.80281 -3.07719,-6.88 -6.88,-6.88z"></path></g></g></svg> -->
+
+      </a>
+<span class="position-absolute admin_chat_notify_top  translate-middle p-1 bg-success border border-light rounded-circle dot_mail_notify <?php echo(mysqli_num_rows($get_mails)>0)?"d-block":"d-none"; ?>">
+    <span class="visually-hidden">New alerts</span>
+  </span>
+
+
+</div><!--chat-->
+
+
       <div class='position-relative chat ms-2  d-inline-block d-md-block mt-md-0 mt-2 '>
-        <a href='chat.php' class='nav-link top_color'>chat
+        <a href='chat.php' class='nav-link top_color'>Chat
 <!-- <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 width="20" height="20"
 viewBox="0 0 172 172"
@@ -173,7 +215,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
 
 <div class=" position-relative ms-2 top_color   mt-md-0 mt-2 nav-link "  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-  notify
+  Notify
 <!-- <svg xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
 width="20" height="20"
 viewBox="0 0 172 172"
@@ -229,7 +271,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   <?php if(mysqli_num_rows($notify)>0){
     while($row=mysqli_fetch_assoc($notify))
     { ?>
-      <a href="detail_project.php?p_id=<?php echo $row['p_id']; ?>&&n_id=<?php echo $row['n_id']; ?>" class="text-decoration-none">
+      <a href="<?php echo$row['link_page'];?>p_id=<?php echo $row['p_id']; ?>&&n_id=<?php echo $row['n_id']; ?>" class="text-decoration-none">
       <div class='bg-light d-flex flex-column  py-3 rounded-3 mt-2'>
     <div class='msg px-2'>
   <span class='text-success fw-bold' ><?php 
@@ -414,7 +456,7 @@ echo substr($row['p_problem'],0,200)."....";
 
  <!--------------------audio notification--------------->
  <audio controls muted preload="auto"  class='d-none audio'>
-<source src="media/audio.mp3" type="audio/mp3" />
+<source src="../media/audio.mp3" type="audio/mp3" />
 </audio>
 
  <!-------------------audio notifcation end------------->
@@ -441,6 +483,46 @@ echo substr($row['p_problem'],0,200)."....";
 <script>
   $(document).ready(function(){
 
+    
+    setInterval(function(){ 
+
+$.ajax({
+url:"php/admin/mail_alert.php",
+method:"post",
+
+success:function(data){
+
+console.log("mail");
+var str=JSON.parse(data);
+console.log(str);
+
+if(str['status']==1){
+
+  $(".notify_alert").append(str['model']);
+  $(".notify_alert").removeClass("d-none");
+  $(".notify_alert").addClass("d-block");
+  $(".dot_mail_notify").removeClass("d-none");
+  $(".dot_mail_notify").addClass("d-block");
+//  $(".audio")[0].play();
+var audio = new Audio("../media/audio.mp3");
+audio.play();
+  setTimeout(function() {
+    $(".notify_alert").removeClass("d-block");
+  $(".notify_alert").addClass("d-none");
+  $(".notify_alert").html("");
+  }, 10000);
+
+
+}
+else{
+//  console.log("i run");
+}
+
+}
+
+});
+    },1000);
+
     setInterval(function(){ 
             console.log("notify");
             $.ajax({
@@ -459,7 +541,7 @@ echo substr($row['p_problem'],0,200)."....";
                       $(".dot_notify").removeClass("d-none");
                       $(".dot_notify").addClass("d-block");
                     //  $(".audio")[0].play();
-                    var audio = new Audio("media/audio.mp3");
+                    var audio = new Audio("../media/audio.mp3");
 audio.play();
                       setTimeout(function() {
                         $(".notify_alert").removeClass("d-block");

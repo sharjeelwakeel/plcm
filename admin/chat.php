@@ -364,7 +364,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
        
  
 <div  style="height:15%">
-    <form class='d-flex align-items-center h-100 bg' >
+    <form class='d-flex align-items-center h-100 bg send_message_form' >
         <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style="resize:none;height:75%" id="send_message"></textarea>
         <button type='button' class='btn btn-outline-success rounded-pill me-4 btn-lg disabled send_message_button' ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor-fill" viewBox="0 0 16 16">
   <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
@@ -563,7 +563,11 @@ $.ajax({
     id:fetch_id,category:category,msg:msg
   },
   success:function(data){
-    // console.log(data);
+    $(".send_message_form").find("#send_message").remove();
+       $( ".send_message_form" ).prepend( " <textarea class='form-control flex-grow-1 rounded-pill me-2 py-3 input_message' placeholder='type a message' style='resize:none;height:75%' id='send_message'></textarea>" );
+       $("#send_message").attr("data-id",id);
+            $("#send_message").attr("data-category",category);
+            $("#send_message").attr("data-table",table);
   flag=true;
 
 
@@ -578,8 +582,12 @@ $.ajax({
 }
 
 
-$('.input_message').keydown(function(e){
-  if(e.which==13){
+$(document).on("keydown","#send_message",function(e){
+  console.log("alert="+e.which);
+  // if(e.which==13){
+    if(e.keyCode==13){
+
+    console.log("enter");
     send_message();
   }
 });

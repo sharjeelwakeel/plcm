@@ -37,7 +37,7 @@ if(isset($_REQUEST['subject'])){
 if(mysqli_query($conn,$query)){
     $last_id = mysqli_insert_id($conn);
 
-    $query="insert into schedule (m_id,p_id) values(".$last_id.",".$p_id.")";
+    $query="insert into schedule (c_id,m_id,p_id) values(".$m_id.",".$last_id.",".$p_id.")";
     mysqli_query($conn,$query);
 
 
@@ -60,13 +60,13 @@ $query="select *  from assign_projects where p_id=".$p_id." and m_id!=".$m_id;
 $notify_assign=mysqli_query($conn,$query);
 
 $m_id=14;
-$query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$p_id.",".$id.",".$m_id.",'".$subject."','admin','add module in')";
+$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$p_id.",".$id.",".$m_id.",'".$subject."','admin','add module in','work_packages.php?')";
 mysqli_query($conn,$query);
 if(mysqli_num_rows($notify_assign)>0){
 while($fetch=mysqli_fetch_assoc($notify_assign))
 {
 $m_id=$fetch['m_id'];
-$query="insert into notifications (p_id,c_id,u_id,name,u_category,description) values(".$p_id.",".$id.",".$m_id.",'".$subject."','member','add module in')";
+$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$p_id.",".$id.",".$m_id.",'".$subject."','member','add module in','work_packages.php')";
 mysqli_query($conn,$query);
 
 
