@@ -125,6 +125,19 @@ $id=$_REQUEST['id'];
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              
+              <li><a class="dropdown-item text-light fw-bold " href="change.php?id=<?php echo $id;?>">Change</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
            
         
 
@@ -295,8 +308,20 @@ $date   = date('d/m H:i A',strtotime($row['date']));
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold active" href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              
+              <li><a class="dropdown-item text-light fw-bold " href="change.php?id=<?php echo $id;?>">Change</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+      
            
               <!-- <li><a class="dropdown-item text-light fw-bold" href="#">Add Quality</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
@@ -341,7 +366,14 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
           <div class='col-12'>
           <p class='text-end'>
-  <a class="btn btn-success " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <?php   $query="select * from permission_status where m_id=".$m_id." and p_id=6";
+
+$configure=mysqli_query($conn,$query);
+$cfg=mysqli_fetch_assoc($configure);
+// echo $cfg['p_id'];
+// exit;
+?>
+  <a class="btn btn-success <?php echo($cfg['p_id']==6 && $cfg['status']=="no")?"disabled":"" ?> " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
@@ -446,16 +478,30 @@ $date   = date('d/m H:i A',strtotime($row['date']));
              <td><?php echo $fet['price']."/-";?></td>
              <td><?php echo date("d-M-Y", strtotime( $fet['date']));?></td>
              <td>
-<?php  if($m_id==$fet['crt_id']){?>
-             <a class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-html="true" title="<em >update</em> " href="edit_cost.php?id=<?php echo $id."&& c_id=".$fet['c_id'];?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+             <?php   $query="select * from permission_status where m_id=".$m_id." and p_id=7";
+
+$configure=mysqli_query($conn,$query);
+$cfg=mysqli_fetch_assoc($configure);
+// echo $cfg['p_id'];
+// exit;
+?>
+             <a class="btn btn-success btn-sm <?php echo($cfg['p_id']==7 && $cfg['status']=="no")?"disabled":"" ?>" data-bs-toggle="tooltip" data-bs-html="true" title="<em >update</em> " href="edit_cost.php?id=<?php echo $id."&& c_id=".$fet['c_id'];?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg></a>
-                          <button class="btn btn-success btn-sm delete" data-bs-toggle="tooltip" data-bs-html="true" title="<em>delete</em>" data-id="<?php echo $fet['c_id'];?>" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
+
+<?php   $query="select * from permission_status where m_id=".$m_id." and p_id=8";
+
+$configure=mysqli_query($conn,$query);
+$cfg=mysqli_fetch_assoc($configure);
+// echo $cfg['p_id'];
+// exit;
+?>
+                          <button class="btn btn-success btn-sm delete <?php echo($cfg['p_id']==8 && $cfg['status']=="no")?"disabled":"" ?>" data-bs-toggle="tooltip" data-bs-html="true" title="<em>delete</em>" data-id="<?php echo $fet['c_id'];?>" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
   <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
 </svg></button>
 
-<?php }?>
+
              </td>
            </tr>
 
@@ -753,7 +799,10 @@ $cost=mysqli_query($conn,$query);
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "<?php echo $pro['p_title']."cost report.csv"; ?>");
+        let name='<?php echo json_encode($pro['p_title']);?>';
+        name = name.replace(/(\r\n|\n|\r)/gm, "");
+
+        link.setAttribute("download", name+" cost report.csv");
         document.body.appendChild(link);
          /* download the data file named "Stock_Price_Report.csv" */
         link.click();

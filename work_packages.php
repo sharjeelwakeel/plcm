@@ -33,6 +33,9 @@ if(isset($_REQUEST['id'])){
   $fetch=mysqli_query($conn,$query);
 
 
+
+
+
   $id=$_SESSION['id']; 
  
 include("php/chat_notify_query.php");
@@ -110,6 +113,16 @@ $id=$_REQUEST['id'];
               <li><a class="dropdown-item " href="add_schedule.php?id=<?php echo $id;?>">Add Schedule</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
            
         
@@ -281,15 +294,18 @@ $date   = date('d/m H:i A',strtotime($row['date']));
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
            
-              <!-- <li><a class="dropdown-item text-light fw-bold" href="#">Add Quality</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Resources</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Procurement</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>   
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Stakeholder</a></li>         
-              <li><hr class="dropdown-divider text-light"></li> -->
+             
  
 
 </ul>
@@ -310,7 +326,14 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
           <div class='col-12'>
           <p class='text-end'>
-  <a class="btn btn-success " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <?php   $query="select * from permission_status where m_id=".$m_id." and p_id=1";
+
+$configure=mysqli_query($conn,$query);
+$cfg=mysqli_fetch_assoc($configure);
+// echo $cfg['p_id'];
+// exit;
+?>
+  <a class="btn btn-success <?php echo($cfg['p_id']==1 && $cfg['status']=="no")?"disabled":"" ?>" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
@@ -383,6 +406,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 </svg><span class='text-dark '>uplaod file</span></label>
          <input type="file" id='file' name='file' class='d-none'>
        </div>
+   
 
        <div class='col-md-2 mt-md-0 mt-2'>
        <label class='form-label text-muted fw-bold fs-5 invisible'>Priority</label>
@@ -392,6 +416,8 @@ $date   = date('d/m H:i A',strtotime($row['date']));
         <button name='module' class='btn btn-outline-success mt-md-4'>create</button>
 
        </div>
+       <div class='img text-center col-8'></div>
+       <div class='error col-12 text-danger'> </div>
 
 
       
@@ -450,7 +476,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
 
 
-                           <div class="alert alert-success d-none" role="alert">
+                           <div class="alert alert-success d-none validate" role="alert">
   <div class='text-center'>
     Work package Add Successfully    </div>
 </div>
@@ -557,7 +583,33 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
     },
 
-    submitHandler: function (form, values, ajax) {
+    submitHandler: function (form, values, ajax) {  var file=document.getElementById("file");
+         
+
+         if(file.files.length>0){
+ 
+    var s=  file.files[0].name;
+   
+    var h=s.split(".");
+    
+ 
+   //  console.log(h[1]);
+ console.log(file.files[0].name);
+      console.log(file.files[0].type);
+ 
+      if(h[h.length-1]=="doc"||h[h.length-1]=="docx"){
+        
+      }
+ else{
+   $(".error").text("uplaod file must in doc docx format");
+      $(".error").slideDown();
+ 
+      return false;
+     }
+ 
+ }
+
+
 
 
  var form = $('#fileUploadForm')[0];
@@ -576,7 +628,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
       
         success: function(response)  {
       
-    
+
         if(response=="success"){
          
             
@@ -623,6 +675,32 @@ $.ajax({
     })
 
 
+  
+    $("#file").on("change",function(){
+    var img=document.getElementById("file");
+    // console.log(img.files[0].mozFullPath);
+    var tmppath = URL.createObjectURL(event.target.files[0]);
+    var s=  img.files[0].name;
+  // console.log(s);
+ // return false;
+
+   var h=s.split(".");
+
+
+
+
+   if(h[h.length-1]=="doc"||h[h.length-1]=="docx"){   
+    console.log(tmppath);
+   // $(".img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+    console.log("run");
+    $(".lab1").addClass("d-none");
+
+   $(".img").fadeIn("slow").append("<img src='"+"admin/web_material/pdf_img.png"+"' class='img-thumbnail' style='width:50px; height:50px'>");
+   $(".error").slideUp(); 
+  }
+  
+
+});//#upload end
 
           
       

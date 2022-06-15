@@ -31,12 +31,12 @@ else{
 
 
 
-$query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
-//echo $query;
-if($projects=mysqli_query($conn,$query)){
+// $query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
+// //echo $query;
+// if($projects=mysqli_query($conn,$query)){
 
-  // echo "run projects";
-}
+//   // echo "run projects";
+// }
 
 
 

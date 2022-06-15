@@ -106,6 +106,19 @@ $id=$_REQUEST['id'];
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              
+              <li><a class="dropdown-item text-light fw-bold " href="change.php?id=<?php echo $id;?>">Change</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
            
         
 
@@ -279,6 +292,19 @@ $date   = date('d/m H:i A',strtotime($row['date']));
               <li><hr class="dropdown-divider text-light"></li>
               <li><a class="dropdown-item text-light fw-bold " href="add_cost.php?id=<?php echo $id;?>">Add Cost</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="members.php?id=<?php echo $id;?>">Members</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="board.php?id=<?php echo $id;?>">Board</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="backlog.php?id=<?php echo $id;?>">Backlog</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="require.php?id=<?php echo $id;?>">Require</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              <li><a class="dropdown-item text-light fw-bold " href="quality.php?id=<?php echo $id;?>">Quality</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
+              
+              <li><a class="dropdown-item text-light fw-bold " href="change.php?id=<?php echo $id;?>">Change</a></li>         
+              <li><hr class="dropdown-divider text-light"></li>
            
               <!-- <li><a class="dropdown-item text-light fw-bold" href="#">Add Quality</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
@@ -357,8 +383,12 @@ $endDate = new DateTime($fet['e_date']);
 //$difference = $startDate->diff($endDate);
 //echo $difference->format("%a"); 
 //echo $difference->d ; 
-// echo $difference->m; 
+// echo $difference->m;
+// echo date("Y-m-d H:i:s")."<br>";
+// echo $fet['e_date']; 
+
 echo dateDifference(date("Y-m-d H:i:s"),$fet['e_date']);
+
                                                                                                                
                                                                                                                
                                                                                                                

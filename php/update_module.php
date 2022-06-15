@@ -4,6 +4,7 @@ session_start();
 
 include_once("../connection/connection.php");
 
+
 if(isset($_REQUEST['subject'])){
     $m_id=$_SESSION['id'];
     $subject=mysqli_real_escape_string($conn,$_REQUEST['subject']);
@@ -21,7 +22,7 @@ if(isset($_REQUEST['subject'])){
     if(isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])){
         $file_path="files/".rand().$_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'],"../admin/".$file_path);
-        $query="update module set subject='".$subject."',type='".$type."',priority='".$priority."',assign_id=".$assigned.",status='".$status."',m_file_path='".$file_path. "' where mod_id=".$id;
+        $query="update module set subject='".$subject."',type='".$type."',priority='".$priority."',assign_id=".$assigned.",status='".$status."',m_file_path='".$file_path. "',file_status='true' where mod_id=".$id;
 
        
 
@@ -38,7 +39,7 @@ if(isset($_REQUEST['subject'])){
     }
 
 
-
+ 
 
 //notification start
 $query="select *  from assign_projects where p_id=".$fm['p_id']." and m_id!=".$m_id;
@@ -55,13 +56,14 @@ $des=$fm['subject']." module replaced name by ".$subject;
 
  //history code
  $query="insert into history (p_id,m_id,description) values(".$fm['p_id'].",".$m_id.",'".$des."')";
- echo $query;
+ //echo $query;
  mysqli_query($conn,$query);
  
  
  //history code end
-$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','admin','".$des."','work_packages.php')";
+$query="insert into notifications (p_id,c_id,u_id,name,u_category,description,link_page) values(".$fm['p_id'].",".$m_id.",".$c_id.",' ','admin','".$des."','work_packages.php?')";
 mysqli_query($conn,$query);
+
 
 if(mysqli_num_rows($notify_assign)>0){
 while($fetch=mysqli_fetch_assoc($notify_assign))
@@ -72,10 +74,11 @@ mysqli_query($conn,$query);
 
 
 }
+
 echo "success";
 }
 else{
-  //  echo"success";
+    echo"success";
 }
     
 

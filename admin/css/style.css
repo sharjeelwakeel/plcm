@@ -42,7 +42,7 @@
   .form-control:focus,.form-select:focus{
       border-color:#198754;
   }
-    
+   
   /*-----------------------signin and create_account end---------------*/
 
 
@@ -134,6 +134,10 @@ display:block;
 }
 
 
+.form-check-input:checked {
+    background-color: #198754;
+    border-color: #198754;
+}
 
 
 
@@ -179,3 +183,87 @@ display:block;
                       }
 
                        /*------------------------------view member start------------------*/
+
+
+                       
+
+
+
+
+
+                                   /*--------------------------add schedule start----------*/
+
+                                   .gantt_add{
+                                    display: none;
+                                }
+                                .gantt_task_content{
+                                    background-color: #198754;
+                                }
+                                .gantt_btn_set.gantt_save_btn_set {
+                                    background: #198754;
+                                    text-shadow: 0 -1px 0 #198754;
+                                    color: #fff;
+                                }
+
+                                .gantt_btn_set.gantt_delete_btn_set {
+                                    text-shadow: 0 -1px 0 #e9ecef;
+                                    background: #e9ecef;
+                                    text-shadow: 0 -1px 0 #e9ecef;
+                                    color: black;
+                                    pointer-events: none;
+                                }
+                                
+
+.gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
+    background-color: #198754!important;
+    color:white!important;
+}
+
+.gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover>*{
+    color:white!important;
+}
+
+.gantt_tree_icon.gantt_file {
+    background-image: none!important;
+}
+
+.gantt_grid_data .gantt_row.gantt_selected, .gantt_grid_data .gantt_row.odd.gantt_selected, .gantt_task_row.gantt_selected {
+    background-color: #e7e9f5;
+}
+
+.gantt_grid_head_cell.gantt_grid_head_add{
+ background-image: none;
+}
+
+                                   /*-------------------------add schedule end-----------*/
+
+
+                               
+              .accordion-button:not(.collapsed) {
+                color: #ffc107;
+                background-color: #198754;
+                box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+            }
+            .accordion-button:focus {
+                z-index: 3;
+                border-color: #198754;
+                outline: 0;
+                box-shadow: 0 0 0 0.25rem rgb(76 175 80 / 39%);
+            }
+
+            .accordion-button::after {
+                flex-shrink: 0;
+                width: 1.25rem;
+                height: 1.25rem;
+                margin-left: 4px;
+                content: "";
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='black'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-size: 1.25rem;
+                transition: transform .2s ease-in-out;
+            }
+
+            .accordion-button:not(.collapsed)::after {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                transform: rotate(-180deg);
+            }

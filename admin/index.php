@@ -18,81 +18,83 @@ $limit=mysqli_query($conn,$query);
 //code to for chat and notification start
 $id=$_SESSION['id'];
 
-$query="select * from chat where r_id=".$id." and status='unseen' order by msg_id desc limit 1";
+// $query="select * from chat where r_id=".$id." and status='unseen' order by msg_id desc limit 1";
 
-$chat=mysqli_query($conn,$query);
+// $chat=mysqli_query($conn,$query);
 
-if(mysqli_num_rows($chat)>0){
-  $res=mysqli_fetch_assoc($chat);
-  $_SESSION['c_chat']=$res['date'];
-}
-else{
+// if(mysqli_num_rows($chat)>0){
+//   $res=mysqli_fetch_assoc($chat);
+//   $_SESSION['c_chat']=$res['date'];
+// }
+// else{
 
-  $_SESSION['c_chat']=date("Y-m-d h:i:s");
+//   $_SESSION['c_chat']=date("Y-m-d h:i:s");
   
-}
+// }
 
-//code to for chat and notification end
-
-
-
-
-$query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,name,notifications.description,notifications.u_category from notifications,projects where u_id=".$id."  and notifications.p_id=projects.p_id and notifications.u_category='admin' order by n_id desc";
-
-// "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
-
-//echo $query;
-
-$notify=mysqli_query($conn,$query);
-if(mysqli_num_rows($notify)>0){
-$date=mysqli_fetch_assoc($notify);
-$_SESSION['date']=$date['date'];
+// //code to for chat and notification end
 
 
 
-}
 
-$notify=mysqli_query($conn,$query);
+// $query="select link_page,n_id,c_id, p_title,notifications.p_id,notifications.date,status,name,notifications.description,notifications.u_category from notifications,projects where u_id=".$id."  and notifications.p_id=projects.p_id and notifications.u_category='admin' order by n_id desc";
 
-$query="select * from notifications where u_id=".$id." and status='unseen' ";
+// // "select notifications.p_id,notifications.date,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id="$id.") or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=".$id.") order by n_id desc";
 
+// //echo $query;
 
-$check=mysqli_query($conn,$query);
-
-
-
-//query for checking last unseen
-
-
-//select notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=33 and u_id=33) or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=33 and u_id=33) order by n_id desc limit 1 offset 0;
-
-
-//notification  query end
+// $notify=mysqli_query($conn,$query);
+// if(mysqli_num_rows($notify)>0){
+// $date=mysqli_fetch_assoc($notify);
+// $_SESSION['date']=$date['date'];
 
 
 
-//email query start
-$query="select * from emails where m_id=".$id." and status='unseen' order by e_id desc limit 1";
+// }
 
-$get_mails=mysqli_query($conn,$query);
+// $notify=mysqli_query($conn,$query);
 
-if(mysqli_num_rows($get_mails)>0){
-  $mail_data=mysqli_fetch_assoc($get_mails);
-  //echo"if".$res['date'];
+// $query="select * from notifications where u_id=".$id." and status='unseen' ";
 
-  $_SESSION['mail_date']=$mail_data['date'];
-}
-else{
- // echo"else".date("Y-m-d H:i:s");
+
+// $check=mysqli_query($conn,$query);
+
+
+
+// //query for checking last unseen
+
+
+// //select notifications.p_id,notifications.date,status,f_name,l_name,name,notifications.description,notifications.u_category from notifications,projects,members where (notifications.p_id=projects.p_id and u_category='admin' and members.m_id=33 and u_id=33) or (notifications.p_id=projects.p_id and u_category='member' and members.m_id=33 and u_id=33) order by n_id desc limit 1 offset 0;
+
+
+// //notification  query end
+
+
+
+// //email query start
+// $query="select * from emails where m_id=".$id." and status='unseen' order by e_id desc limit 1";
+
+// $get_mails=mysqli_query($conn,$query);
+
+// if(mysqli_num_rows($get_mails)>0){
+//   $mail_data=mysqli_fetch_assoc($get_mails);
+//   //echo"if".$res['date'];
+
+//   $_SESSION['mail_date']=$mail_data['date'];
+// }
+// else{
+//  // echo"else".date("Y-m-d H:i:s");
   
 
-  $_SESSION['mail_date']=date("Y-m-d h:i:s");
+//   $_SESSION['mail_date']=date("Y-m-d h:i:s");
   
-}
+// }
 
 
 
-//email query end
+// //email query end
+
+include("php/admin/chat_notify_query.php");
 
 ?>
 
@@ -116,7 +118,7 @@ else{
   <!---------------------------navbar----------------------->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="#">PLCM</a>
+    <a class="navbar-brand" href="index.php">PLCM</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -214,7 +216,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
 
 
-<div class=" position-relative ms-2 top_color   mt-md-0 mt-2 nav-link "  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+<div class=" position-relative ms-2 top_color   mt-md-0 mt-2 nav-link " style="cursor:pointer"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
   Notify
 <!-- <svg xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
 width="20" height="20"
@@ -227,7 +229,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </span>
 
   
-</div>  
+</div>  <!--notify end-->
       <ul class='navbar-nav'>
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -479,138 +481,138 @@ echo substr($row['p_problem'],0,200)."....";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src='js/chat_notify.js'></script>
 <script>
   $(document).ready(function(){
 
     
-    setInterval(function(){ 
+//     setInterval(function(){ 
 
-$.ajax({
-url:"php/admin/mail_alert.php",
-method:"post",
+// $.ajax({
+// url:"php/admin/mail_alert.php",
+// method:"post",
 
-success:function(data){
+// success:function(data){
 
-console.log("mail");
-var str=JSON.parse(data);
-console.log(str);
+// console.log("mail");
+// var str=JSON.parse(data);
+// console.log(str);
 
-if(str['status']==1){
+// if(str['status']==1){
 
-  $(".notify_alert").append(str['model']);
-  $(".notify_alert").removeClass("d-none");
-  $(".notify_alert").addClass("d-block");
-  $(".dot_mail_notify").removeClass("d-none");
-  $(".dot_mail_notify").addClass("d-block");
-//  $(".audio")[0].play();
-var audio = new Audio("../media/audio.mp3");
-audio.play();
-  setTimeout(function() {
-    $(".notify_alert").removeClass("d-block");
-  $(".notify_alert").addClass("d-none");
-  $(".notify_alert").html("");
-  }, 10000);
+//   $(".notify_alert").append(str['model']);
+//   $(".notify_alert").removeClass("d-none");
+//   $(".notify_alert").addClass("d-block");
+//   $(".dot_mail_notify").removeClass("d-none");
+//   $(".dot_mail_notify").addClass("d-block");
+// //  $(".audio")[0].play();
+// var audio = new Audio("../media/audio.mp3");
+// audio.play();
+//   setTimeout(function() {
+//     $(".notify_alert").removeClass("d-block");
+//   $(".notify_alert").addClass("d-none");
+//   $(".notify_alert").html("");
+//   }, 10000);
 
 
-}
-else{
-//  console.log("i run");
-}
+// }
+// else{
+// //  console.log("i run");
+// }
 
-}
+// }
 
-});
-    },1000);
+// });
+//     },1000);
 
-    setInterval(function(){ 
-            console.log("notify");
-            $.ajax({
-                 url:"php/admin/notify_alert.php",
-                 method:"post",
+//     setInterval(function(){ 
+//             console.log("notify");
+//             $.ajax({
+//                  url:"php/admin/notify_alert.php",
+//                  method:"post",
                 
-                 success:function(data){
-                  var str=JSON.parse(data);
-                    console.log(str);
+//                  success:function(data){
+//                   var str=JSON.parse(data);
+//                     console.log(str);
                    
-                    if(str['status']==1){
-                      $(".offcanvas-body").prepend(str['data']);
-                      $(".notify_alert").append(str['model']);
-                      $(".notify_alert").removeClass("d-none");
-                      $(".notify_alert").addClass("d-block");
-                      $(".dot_notify").removeClass("d-none");
-                      $(".dot_notify").addClass("d-block");
-                    //  $(".audio")[0].play();
-                    var audio = new Audio("../media/audio.mp3");
-audio.play();
-                      setTimeout(function() {
-                        $(".notify_alert").removeClass("d-block");
-                      $(".notify_alert").addClass("d-none");
-                      $(".notify_alert").html("");
-                      }, 10000);
+//                     if(str['status']==1){
+//                       $(".offcanvas-body").prepend(str['data']);
+//                       $(".notify_alert").append(str['model']);
+//                       $(".notify_alert").removeClass("d-none");
+//                       $(".notify_alert").addClass("d-block");
+//                       $(".dot_notify").removeClass("d-none");
+//                       $(".dot_notify").addClass("d-block");
+//                     //  $(".audio")[0].play();
+//                     var audio = new Audio("../media/audio.mp3");
+// audio.play();
+//                       setTimeout(function() {
+//                         $(".notify_alert").removeClass("d-block");
+//                       $(".notify_alert").addClass("d-none");
+//                       $(".notify_alert").html("");
+//                       }, 10000);
 
 
-                    }
-                    else{
-                    //  console.log("i run");
-                    }
+//                     }
+//                     else{
+//                     //  console.log("i run");
+//                     }
 
-                 }
+//                  }
 
-                });
+//                 });
                     
 
 
-}, 3000);//run this thang every 2 seconds
+// }, 3000);//run this thang every 2 seconds
         
 
-                // });
+//                 // });
 
 
 
 
 
-    setInterval(function(){ 
+//     setInterval(function(){ 
 	
-  $.ajax({
-       url:"php/admin/chat_alert.php",
-       method:"post",
+//   $.ajax({
+//        url:"php/admin/chat_alert.php",
+//        method:"post",
       
-       success:function(data){
+//        success:function(data){
 
-        console.log("chat");
-        var str=JSON.parse(data);
-          console.log(str);
+//         console.log("chat");
+//         var str=JSON.parse(data);
+//           console.log(str);
          
-          if(str['status']==1){
+//           if(str['status']==1){
             
-            $(".notify_alert").append(str['model']);
-            $(".notify_alert").removeClass("d-none");
-            $(".notify_alert").addClass("d-block");
-            $(".dot_chat_notify").removeClass("d-none");
-            $(".dot_chat_notify").addClass("d-block");
-          //  $(".audio")[0].play();
-          var audio = new Audio("../media/audio.mp3");
-audio.play();
-            setTimeout(function() {
-              $(".notify_alert").removeClass("d-block");
-            $(".notify_alert").addClass("d-none");
-            $(".notify_alert").html("");
-            }, 10000);
+//             $(".notify_alert").append(str['model']);
+//             $(".notify_alert").removeClass("d-none");
+//             $(".notify_alert").addClass("d-block");
+//             $(".dot_chat_notify").removeClass("d-none");
+//             $(".dot_chat_notify").addClass("d-block");
+//           //  $(".audio")[0].play();
+//           var audio = new Audio("../media/audio.mp3");
+// audio.play();
+//             setTimeout(function() {
+//               $(".notify_alert").removeClass("d-block");
+//             $(".notify_alert").addClass("d-none");
+//             $(".notify_alert").html("");
+//             }, 10000);
 
 
-          }
-          else{
-          //  console.log("i run");
-          }
+//           }
+//           else{
+//           //  console.log("i run");
+//           }
 
-       }
+//        }
 
-      });
+//       });
           
 
 
-}, 3000);//run this thang every 2 seconds
+// }, 3000);//run this thang every 2 seconds
 
   
     $(".btn_search").click(function(){

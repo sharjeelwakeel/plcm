@@ -23,7 +23,7 @@
 
            <div class='col-md-5 col-12 '>
              <div class='button align-self-end mt-1'>
-              <a href='create_account.php'> <button class='btn btn-outline-success '>create admin</button></a>
+              <a href='create_account.php'> <button class='btn btn-outline-success d-none '>create admin</button></a>
 
                 </div>
 

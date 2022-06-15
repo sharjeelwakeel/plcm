@@ -37,12 +37,12 @@ $id=$_SESSION['id'];
 // //chat query end
 
 
-// $query="select m_status,projects.p_id,p_category,p_title,p_problem from projects,assign_projects where projects.p_id=assign_projects.p_id and m_id=".$id." order by p_id desc";
+ $query="select m_status,projects.p_id,p_category,p_title,p_problem,c_name from projects,assign_projects,category where projects.p_id=assign_projects.p_id and m_id=".$id." and p_category=c_id order by p_id desc";
 // //echo $query;
-// if($projects=mysqli_query($conn,$query)){
+if($projects=mysqli_query($conn,$query)){
 
-//   // echo "run projects";
-// }
+  // echo "run projects";
+}
 
 
 
@@ -337,7 +337,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
   <div class='col-md-4  '>
           <a href="detail_project.php?id=<?php echo $fetch['p_id'];?>" class="text-decoration-none">
           <div class="card border-secondary mb-3 shadow border-0" >
-  <div class="card-header text-dark bg-body border-0 <?php echo ($fetch['m_status']=='unseen')?'fw-bold':'';?>" ><?php  echo $fetch['p_category'] ?></div>
+  <div class="card-header text-dark bg-body border-0 <?php echo ($fetch['m_status']=='unseen')?'fw-bold':'';?>" ><?php  echo $fetch['c_name'] ?></div>
   <div class="card-body text-secondary">
     <h5 class="card-title <?php echo ($fetch['m_status']=='unseen')?"fw-bold":"";?>"><?php echo$fetch['p_title'];?></h5>
     <p class="card-text <?php echo ($fetch['m_status']=='unseen')?"fw-bold":"";?>"><?php echo substr($fetch['p_problem'],0,200)."....";?></p>

@@ -203,6 +203,7 @@ menu li a:hover>svg>path{
                                     background-image:none;
                                     background-color: #198754;
                                     border: 1px solid #c4c3c2;
+                                    color:white;
                                 }
                                 
                                 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
@@ -323,6 +324,7 @@ menu li a:hover>svg>path{
 
 .gantt_grid_head_cell.gantt_grid_head_add{
  background-image: url("../admin/web_material/add.png");
+ opacity: 1;
 }
 
                                    /*-------------------------add schedule end-----------*/

@@ -1,0 +1,51 @@
+.wrapper,.content{
+     height:100vh; 
+}
+.bg-green{
+
+    background-color:#198754!important;
+}
+.bg-silver{
+background-color:#efebe9;
+}
+.border-manage{
+    border-radius: 89px 128px 85px 92px / 0px 82px 87px 1px;
+}
+.animate__animated.animate__backInLeft{
+    --animate-duration: 3s;
+}
+
+.animate__animated.animate__bounce{
+    --animate-duration: 3s;
+    --animate-delay: 3s;
+}
+.error{
+    display:none;
+}
+
+
+
+/* add thier previous css */
+
+.email .e_desc,.email .e_date{
+    color:#e9ecef!important;
+    font-size:15px;
+}
+
+               /* ------------signin and create_account start------------------------ */
+
+               
+                      /*------------------------------view member start------------------*/
+                      .table-img{
+                        position: absolute;
+                        top:-90px;
+                        display:none;
+                        
+                    }
+                    .link-success{
+                        text-decoration: none;
+                    }
+
+                     /*------------------------------view member start------------------*/
+
+   

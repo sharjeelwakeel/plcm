@@ -18,10 +18,10 @@ if(isset($_REQUEST['subject'])){
   
 
     if(isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])){
-        $file_path="files/".rand().$_FILES['file']['name'];
-        move_uploaded_file($_FILES['file']['tmp_name'],"../admin/".$file_path);
+        $file_path="admin/files/".rand().$_FILES['file']['name'];
+        move_uploaded_file($_FILES['file']['tmp_name'],"../".$file_path);
         
-        $query="insert into module (create_id,assign_id,p_id,subject,status,priority,type,m_file_path) values(".$m_id." ,".$assigned.",".$p_id.",'".$subject."','".$status."','".$priority."','".$type."','".$file_path."')";
+        $query="insert into module (create_id,assign_id,p_id,subject,status,priority,type,m_file_path,file_status) values(".$m_id." ,".$assigned.",".$p_id.",'".$subject."','".$status."','".$priority."','".$type."','".$file_path."','true')";
 
 
     }

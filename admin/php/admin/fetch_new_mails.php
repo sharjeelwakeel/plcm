@@ -37,16 +37,16 @@ if(mysqli_num_rows($emails)>0){
         $status='d-none';
     }
   
-    $user.="<tr class='bg-success border border-start-0 border-end-0 border-top-0 border-light get_mail' data-id='".$em['e_id']."' data-m_id='".$em['crt_id']."' style='cursor:pointer'><td><div class='text-light fw-bold'>".$name."<span class='badge ".$status." rounded-pill bg-light text-dark mx-2'>new</span></div>
-    <p class=' e_desc'>".substr($em['description'],0,100)."</p>
-    <div class='text-end e_date'>".date('d/m H:i A',strtotime($em['date']))."</div>
-    </td></tr>";
+    $user.="<tr class=' fw-bold border border-start-0 border-end-0 border-top-0 border-dark get_mail' data-id='".$em['e_id']."' data-m_id='".$em['crt_id']."' style='cursor:pointer;background-color:white!important'><td><a href='see_mail.php?e_id=".$em['e_id']."&&m_id=".$em['crt_id']."' class='d-block text-decoration-none'><div class='text-dark fw-bold text-muted fw-bold '>".$name."<span class='badge ".$status." rounded-pill bg-light text-dark mx-2'>new</span></div></a></td>
+    <td> <p class=' e_desc test-dark fw-normal  text-muted'>".substr($em['description'],0,100)."</p></td>
+     <td><div class='text-end e_date text-dark fw-normal text-muted'>".date('d/m H:i A',strtotime($em['date']))."</div>
+     </td></tr>";
   }
 
 
 }
 else{
-  $user="<tr class='bg-success border border-0'><td class='text-light text-center ' colspan='5'>no mail</td></tr> ";
+  $user="<tr class=' border border-0'><td class='text-light text-center ' colspan='5'>no mail</td></tr> ";
 
 }
 

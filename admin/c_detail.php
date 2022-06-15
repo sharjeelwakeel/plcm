@@ -71,7 +71,7 @@ function dateDifference($start_date, $end_date)
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>ViewProjects-plcm</title>
+    <title>Detail-plcm</title>
     <link rel='stylesheet' href='css/style.css'>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
   </head>
@@ -82,7 +82,7 @@ function dateDifference($start_date, $end_date)
   <!---------------------------navbar----------------------->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="#">PLCM</a>
+    <a class="navbar-brand" href="index.php">PLCM</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -107,6 +107,16 @@ function dateDifference($start_date, $end_date)
             <li><a class="dropdown-item " href="work_packages.php?p_id=<?php echo $id;?>">Work packages</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="cost_analysis.php?p_id=<?php echo $id;?>">Cost analysis</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="board.php?p_id=<?php echo $id;?>">Board</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="backlog.php?p_id=<?php echo $id;?>">Backlog</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="project_members.php?p_id=<?php echo $id;?>">Members</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="require.php?p_id=<?php echo $id;?>">Require</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>
             <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -177,6 +187,16 @@ function dateDifference($start_date, $end_date)
             <li><a class="dropdown-item " href="work_packages.php?p_id=<?php echo $id;?>">Work packages</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="cost_analysis.php?p_id=<?php echo $id;?>">Cost analysis</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="board.php?p_id=<?php echo $id;?>">Board</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="backlog.php?p_id=<?php echo $id;?>">Backlog</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="project_members.php?p_id=<?php echo $id;?>">Members</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="require.php?p_id=<?php echo $id;?>">Require</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item " href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>
             <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
             <li><hr class="dropdown-divider"></li>
