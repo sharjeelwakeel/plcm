@@ -7,8 +7,9 @@ $m_id=$_SESSION['id'];
 
 if(isset($_REQUEST['id'])||isset($_REQUEST['?id'])){
 
-  $id=(isset($_REQUEST['id']))?$_REQUEST['id']:'';
-  $id=(isset($_REQUEST['?id']))?$_REQUEST['?id']:'';
+  $id=(isset($_REQUEST['id']))?$_REQUEST['id']:$_REQUEST['?id'];
+  
+
 
   if(isset($_REQUEST['n_id'])){
     $n_id=$_REQUEST['n_id'];
@@ -39,8 +40,8 @@ if(isset($_REQUEST['id'])||isset($_REQUEST['?id'])){
 include("php/chat_notify_query.php");
 
 
-$id=(isset($_REQUEST['id']))?$_REQUEST['id']:'';
-$id=(isset($_REQUEST['?id']))?$_REQUEST['?id']:''; 
+$id=(isset($_REQUEST['id']))?$_REQUEST['id']:$_REQUEST['?id'];
+
   
   
 
@@ -405,11 +406,11 @@ $cfg=mysqli_fetch_assoc($configure);
 
          <div class='col-12 '>
         
-         <div class="table-responsive mt-2">
+         <div class="table-responsive mt-2" style='overflow-x:unset'>
 <table id="userTable" class=' table table-hover '>
         <thead>
             <th>ID</th>
-            <th>Subject</th>
+            <th>Description</th>
             <th>Status</th>
             <th>Action</th>
            
@@ -419,7 +420,7 @@ $cfg=mysqli_fetch_assoc($configure);
            if(mysqli_num_rows($fetch)>0){
            while($fet=mysqli_fetch_assoc($fetch)){?>
            <tr>
-             <td ><a href='content.php?id=<?php echo $pro['p_id']?>&&d_id=<?php echo $fet['d_id'];?>' class='text-decoration-none text-dark'><?php echo $fet['d_id'];?></a></td>
+             <td ><a href='#' class='text-decoration-none text-dark'><?php echo $fet['d_id'];?></a></td>
              <td><?php echo $fet['description'];?></td>
              <td><?php echo $fet['status'];?></td>
              <td>
@@ -806,7 +807,7 @@ formdata.append("id",id);
            console.log( String(response)=="success");
 
             // alert("yes")
-        if(response=="success"){
+    
          
                       $(".alert").removeClass("d-none");
                       $(".alert").html("Defect Update successfully");
@@ -817,7 +818,7 @@ formdata.append("id",id);
                   
                       location.reload();
                       }, 3000);
-        }
+        
 
         
          

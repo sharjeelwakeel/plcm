@@ -100,9 +100,9 @@ div.checklist li.checked:hover, div.checklist li.checked:hover label {
 
             <li><a class="  btn btn-success  btn-outline-light " href="create_mail.php">Create</a></li>  
             <li><hr class="dropdown-divider text-light"></li>
-            <li><a class="dropdown-item text-light fw-bold " href="inbox_mail2.php">Inbox</a></li>         
+            <li><a class="dropdown-item text-light fw-bold " href="inbox_mail.php">Inbox</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold " href="sent_mail2.php">Sent</a></li>         
+              <li><a class="dropdown-item text-light fw-bold " href="sent_mail.php">Sent</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
 
           </ul>
@@ -137,9 +137,9 @@ div.checklist li.checked:hover, div.checklist li.checked:hover label {
          
   <li><a class="  btn btn-success  btn-outline-light " href="create_mail.php">Create</a></li>  
             <li><hr class="dropdown-divider text-light"></li>
-            <li><a class="dropdown-item text-light fw-bold " href="inbox_mail2.php">Inbox</a></li>         
+            <li><a class="dropdown-item text-light fw-bold " href="inbox_mail.php">Inbox</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold " href="sent_mail2.php">Sent</a></li>         
+              <li><a class="dropdown-item text-light fw-bold " href="sent_mail.php">Sent</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
            
              
@@ -152,12 +152,12 @@ div.checklist li.checked:hover, div.checklist li.checked:hover label {
 </div><!--col-md-4-->
 
 <div class='col-md-9 bg-body'>
-<div class='row bg-body h-auto '>
+<div class='row bg-body h-auto justify-content-start align-items-start'>
         
         
 
          
-         <div class='col-12 '>
+         <div class='col-md-6 col-12 '>
         
          <form  method="POST" class='js-form module' enctype="multipart/form-data" id="fileUploadForm">
       <div class="mb-1">
@@ -188,7 +188,7 @@ div.checklist li.checked:hover, div.checklist li.checked:hover label {
   </div>
 
 <div class="form-group mb-1 student ">
-							<label for="message" class="form-label">projects</label>
+							<label for="message" class="form-label">Members</label>
 							<div class="input-group">
              
 								<select name="projects[]" multiple="multiple" id="skills">
@@ -255,18 +255,60 @@ div.checklist li.checked:hover, div.checklist li.checked:hover label {
          <input type="file" id='file' name='file' class='d-none'>
        </div>
         
-      </div>
+    
       <div id='img' class='text-center'></div>
       <div class="text-end">
        
         <button  class="btn btn-success">Create</button>
       </div>
-    </div>
+  
 
     </form>
-           
-
+<!--            
+    </div> -->
   </div><!--col-12-->
+
+
+  <div class='col-md-6 d-none d-md-block view align-items-start '>
+    <div id='view_subject'>
+
+    </div>
+
+    <div  id='view_description'>
+
+    </div>
+
+
+    <div id='view_file_content' class='d-none' style="height:400px;overflow-y:scroll">
+
+    </div>
+
+    <div id="model_view">
+  <button type="button" class="btn btn-success mt-2 btn-sm d-none"id="btn_view" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  View
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <!-- <embed src="C:\Users\Dell\Desktop\sup Marks.pdf" type="application/pdf" width="100%" height="100%"> -->
+  
+     <iframe src="#" id="pdf_viewer" width="100%" height="100%">
+    </iframe>
+      </div>
+   
+    </div>
+  </div>
+</div>
+  </div>
+
+  </div>
 
 
 
@@ -622,9 +664,76 @@ $("#category").change(function(){
 
 
 });
+
+
+
+<?php      
+if(!isset($_REQUEST['e_id'])){
+  ?>
+        $("#sub").blur(function(){
+$("#view_subject").html("<div style='font-size:10px;'>subject:</div><div style='font-size:12px; font-weight:bold' >"+$(this).val()+"</div>")
+        });
+
+        $("#desc").blur(function(){
+          $("#view_description").html("<div style='font-size:10px'>description:</div><div style='font-size:10px' class='ms-4'>"+$(this).val()+"</div>")
+        });
+
+        $("#file").change(function(){
+          var file=document.getElementById("file");
+         
+
+         const files = event.target.files;
+         console.log(files);
+
+   var s=  file.files[0].name;
+   var h=s.split(".");
+  
+   if(h[h.length-1]=="pdf"){
+   var tmppath = URL.createObjectURL(event.target.files[0]);
+   $("#view_file_content").html("");
+   $("#pdf_viewer").attr("src",tmppath);
+   $("#btn_view").removeClass("d-none")
+   $("#btn_view").addClass("d-block")
+   $("#view_file_content").removeClass("d-block");
+          $("#view_file_content").addClass("d-none");
+   return;
+ }
+
+          
+ var form =new FormData ($('#fileUploadForm')[0]);
+ 
+ $.ajax({
+        url: 'php/admin/file_content.php',
+        method: 'POST',
+      data:form,
+        enctype:"multipart/form-data",
+        contentType: false, //this is requireded please see answers above
+            processData: false,
+      
+        success: function(response)  {
+
+          $("#view_file_content").html("<div style='font-size:10px' class='mt-4'></div><pre style='font-size:10px'>"+response+"</pre>")
+          $("#view_file_content").removeClass("d-none");
+          $("#view_file_content").addClass("d-block");
+          $("#btn_view").removeClass("d-block")
+    $("#btn_view").addClass("d-none")
+        }
+       
+        })
+      })
+        //end
+<?php } ?>
+
+       
+
+
+
           
       
         });
+
+
+
 
 
         //end

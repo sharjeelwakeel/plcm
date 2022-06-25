@@ -227,7 +227,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
   <li><a class="dropdown-item text-light fw-bold  " href="home.php">Assign projects</a></li>
             <li><hr class="dropdown-divider text-light"></li>
-            <li><a class="dropdown-item text-light fw-bold active" href="history.php">History</a></li>
+            <li><a class="dropdown-item text-light fw-bold active"  href="history.php">History</a></li>
             <li><hr class="dropdown-divider text-light"></li>
   
 </ul>

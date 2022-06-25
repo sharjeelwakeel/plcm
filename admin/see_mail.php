@@ -90,6 +90,8 @@ if(isset($_REQUEST['e_id'])&&isset($_REQUEST['m_id'])){
   
   
     $file=$em['file_path'];
+    
+    
     $downlaod=($em['file_path']!='')?"download":'';
   
   
@@ -115,7 +117,7 @@ if(isset($_REQUEST['e_id'])&&isset($_REQUEST['m_id'])){
   Forward
   </a>";
   
-  
+ 
   
 //   echo json_encode(array("profile"=>$profile,"chat"=>$chat));
   

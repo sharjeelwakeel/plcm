@@ -57,17 +57,19 @@ if(isset($_REQUEST['e_id'])&&isset($_REQUEST['m_id'])){
   $arr=mysqli_fetch_all($get,MYSQLI_ASSOC);
   $user=NULL;
   $i=-1;
+  $g=0;
   
   foreach($arr as $val ){
     $user[++$i]= $val['f_name'];
-  
+    $g++;
   }
      
   
   
   
-  
+  if($g>0){
     $user=implode(",",$user);
+}
   
     
   
@@ -102,7 +104,7 @@ if(isset($_REQUEST['e_id'])&&isset($_REQUEST['m_id'])){
 
   
   
-    $file=$em['file_path'];
+    $file="admin/".$em['file_path'];
     $downlaod=($em['file_path']!='')?"download":'';
   
   

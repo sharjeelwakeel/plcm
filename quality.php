@@ -29,9 +29,10 @@ if(isset($_REQUEST['id'])){
   
 
   $query="select test_case.name as name,requirement.name as req_name,f_name,l_name,t_id,status,due,test_case.c_id from test_case,members,requirement where test_case.p_id=".$pro['p_id']." and m_id=assigned and test_case.r_id=requirement.r_id order by t_id desc";
- // echo $query;
+  //echo $query;
 
   $fetch=mysqli_query($conn,$query);
+ // echo mysqli_num_rows($fetch);
 
   $query="select * from requirement where p_id=".$id;
   $require=mysqli_query($conn,$query);

@@ -104,34 +104,6 @@ $id=$_REQUEST['p_id'];
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item active" href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>
-            <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="view_member.php">View Members</a></li> -->
-            <!-- <li><a class="dropdown-item" href="#">Feasiblity Study</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Projects Proposal And Reviews</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Scope Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Schedule Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Cost Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Qulaity Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Resource Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Communication Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Risk Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Procurement Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Stakeholders Management</a></li> -->
           </ul>
         </li>
      
@@ -287,32 +259,6 @@ $date   = date('d/m H:i A',strtotime($row['date']));
             <li><a class="dropdown-item active" href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>
               
-            <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="view_member.php">View Members</a></li> -->
-            <!-- <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Scope Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Schedule Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Cost Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Qulaity Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Resource Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Communication Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Risk Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Procurement Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Stakeholders Management</a></li> -->
-      
 
 
 </ul>
@@ -329,63 +275,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
           <div class='col-12 text-muted  fw-bold mt-2 '>
             <span class='text-dark'>Project Name:</span><span><?php echo $pro['p_title']; ?>        </div>
 
-          <div class='col-12'>
-          <p class='text-end'>
-  <a class="btn btn-success " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-</svg>
-  </a>
- 
-</p>
-<div class="collapse p-0" id="collapseExample">
-  <div class="card card-body ">
-  <form  method="POST" class='js-form module' enctype="multipart/form-data" id="fileUploadForm">
-      <div class='row justify-content-start '>
-      <div class='col-md-8'>
-        <label class='form-label text-muted fs-5 fw-bold'>Description</label>
-        <input class='form-control'placeholder='Description' name='subject' data-validate-field='subject'>
-
-       </div>
-
-     
-
-       <div class='col-md-2'>
-        <label class='form-label text-muted fw-bold fs-5'>Status</label>
-        <select class="form-select text-muted" aria-label="Default select example" name='status' data-validate-field='status'>
-  <option selected value=''>Select</option>
- 
-  <option value="Pending">Pending</option>
-  <option value="Removed">Removed</option>
-  <option value="Inprocess">Inprocess</option>
-  
-  
-  
-
-</select>
-
-       </div>
-    
-       <input type="hidden" class='form-label' name="p_id"  value="<?php echo $pro['p_id']; ?>">
-       <input type="hidden" class='form-label' name="t_id"  value="<?php echo $t_id; ?>">
-       <div class='col-md-2 mt-4 mt-md-0'>
-       
-        <button name='module' class='btn btn-outline-success mt-md-4'>create</button>
-
-       </div>
-
-
-      
-
-
-</div><!--row-->
-</form>
-</div>
-</div>
-         </div>
-
-
-
+          
          <div class='col-12 '>
         
          <div class="table-responsive mt-2">

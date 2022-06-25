@@ -360,8 +360,17 @@ $date   = date('d/m H:i A',strtotime($row['date']));
 
           <div class='col-12'>
           <p class='text-end'>
-            <?php   if($status==false){ ?>
-  <a class="btn btn-success " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <?php   if($status==false){
+              
+              ?>
+                        <?php   $query="select * from permission_status where m_id=".$m_id." and p_id=1";
+
+$configure=mysqli_query($conn,$query);
+$cfg=mysqli_fetch_assoc($configure);
+// echo $cfg['p_id'];
+// exit;
+?>
+  <a class="btn btn-success <?php echo($cfg['p_id']==1 && $cfg['status']=="no")?"disabled":"" ?> " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
@@ -540,7 +549,7 @@ $cfg=mysqli_fetch_assoc($configure);
 
                            <div class="alert alert-success d-none validate" role="alert">
   <div class='text-center'>
-    Work package Add Successfully    </div>
+    File Added Successfully    </div>
 </div>
 
 

@@ -282,7 +282,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item " href="project_members.php?p_id=<?php echo $id;?>">Members</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item " href="require.php?p_id=<?php echo $id;?>">Require</a></li>
+            <li><a class="dropdown-item active" href="require.php?p_id=<?php echo $id;?>">Require</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item " href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>

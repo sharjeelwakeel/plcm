@@ -84,34 +84,6 @@ $id=$_REQUEST['p_id'];
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item " href="quality.php?p_id=<?php echo $id;?>">quality</a></li>
             <li><hr class="dropdown-divider"></li>
-            <!-- <li><a class="dropdown-item" href="add_member.php">Add Members</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="view_member.php">View Members</a></li> -->
-            <!-- <li><a class="dropdown-item" href="#">Feasiblity Study</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Projects Proposal And Reviews</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Scope Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Schedule Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Cost Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Integration Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Qulaity Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Resource Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Communication Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Risk Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Procurement Management</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Project Stakeholders Management</a></li> -->
           </ul>
         </li>
      

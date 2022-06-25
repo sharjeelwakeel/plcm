@@ -28,8 +28,9 @@ if(isset($_REQUEST['p_id'])){
 //echo $query;
   $assign=mysqli_query($conn,$query);
   
-
-  $query="select * from test_case,members where p_id=".$pro['p_id']." and m_id=assigned order by t_id desc";
+  $query="select test_case.name as name,requirement.name as req_name,f_name,l_name,t_id,status,due,test_case.c_id from test_case,members,requirement where test_case.p_id=".$pro['p_id']." and m_id=assigned and test_case.r_id=requirement.r_id order by t_id desc";
+ 
+  //$query="select * from test_case,members where p_id=".$pro['p_id']." and m_id=assigned order by t_id desc";
   //echo $query;
 
   $fetch=mysqli_query($conn,$query);

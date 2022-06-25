@@ -446,7 +446,7 @@ $cfg=mysqli_fetch_assoc($configure);
            if(mysqli_num_rows($fetch)>0){
            while($fet=mysqli_fetch_assoc($fetch)){?>
            <tr>
-             <td ><a href='content.php?id=<?php echo $pro['p_id']?>&&r_id=<?php echo $fet['r_id'];?>' class='text-decoration-none text-dark'><?php echo $fet['r_id'];?></a></td>
+             <td ><a href='#' class='text-decoration-none text-dark'><?php echo $fet['r_id'];?></a></td>
              <td><?php echo $fet['name'];?></td>
              <td><?php echo $fet['subject'];?></td>
              <td><?php echo $fet['artifact'];?></td>
@@ -589,7 +589,7 @@ if(mysqli_num_rows($module)>0){while($fet=mysqli_fetch_assoc($module)){?>
 
                            <div class="alert alert-success d-none validate" role="alert">
   <div class='text-center'>
-    Work package Add Successfully    </div>
+    Requirement Added Successfully    </div>
 </div>
 
 

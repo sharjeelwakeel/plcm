@@ -10,9 +10,10 @@ if(isset($_REQUEST['id'])){
   $id=$_REQUEST['id'];
   $m_id=$_SESSION['id'];
 
-  $query="select p_title,issue_date,end_date,m_id from projects,assign_projects where m_id=".$m_id." and assign_projects.p_id=projects.p_id and projects.p_id=".$id;
+  $query="select p_title,issue_date,end_date,m_id,assign_projects.description as description from projects,assign_projects where m_id=".$m_id." and assign_projects.p_id=projects.p_id and projects.p_id=".$id;
 $project=mysqli_query($conn,$query);
 $pro=mysqli_fetch_assoc($project);
+
 
 $query="SELECT subject,s_date,e_date from module,schedule where module.p_id=schedule.p_id and schedule.p_id=".$id." and mod_id=m_id";
 
@@ -306,14 +307,7 @@ $date   = date('d/m H:i A',strtotime($row['date']));
               <li><a class="dropdown-item text-light fw-bold " href="change.php?id=<?php echo $id;?>">Change</a></li>         
               <li><hr class="dropdown-divider text-light"></li>
            
-              <!-- <li><a class="dropdown-item text-light fw-bold" href="#">Add Quality</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Resources</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Procurement</a></li>         
-              <li><hr class="dropdown-divider text-light"></li>   
-              <li><a class="dropdown-item text-light fw-bold" href="#">Add Stakeholder</a></li>         
-              <li><hr class="dropdown-divider text-light"></li> -->
+       
  
 
 </ul>
@@ -352,7 +346,14 @@ echo $difference->d ;
                                                                                                                
                                                                                                                
                                                                                                                
-                                                                                                                ?> Day left</span></div>
+                                                                                                                ?> Day left</span>
+                                                                                                                
+                                                                                                              
+     <div class='text-muted fw-bold 'style='font-size:15px!important'>description:</div>
+       <div class='text-muted fw-bold' style='font-size:15px!important'><?php echo$pro['description'];?></div>                                                                                                         
+                                                                                                              </div>
+
+
        
           
        <div class='col-12 border border-start-0 border-end-0 border-top-0 border border-success p-0'><span class="bg-success px-5 text-light fw-bold mt-1 d-inline-block">Modules</span></div>

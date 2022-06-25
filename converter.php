@@ -118,13 +118,13 @@ function pptx_to_text($input_file){
              
                 return $this->read_docx();
             } elseif($file_ext == "xlsx") {
-            //    return $this->xlsx_to_text();
+              //  return $this->xlsx_to_text();
             }elseif($file_ext == "pptx") {
                 
                // return $this->pptx_to_text();
             }
         } else {
-            return "Invalid File Type";
+            return "unable to fetch file content";
         }
     }
 
